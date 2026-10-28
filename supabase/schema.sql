@@ -18,6 +18,8 @@ create table if not exists public.deals (
   source_name text not null,
   hiring jsonb,
   is_sample boolean not null default false,
+  reviewed boolean not null default false,
+  raw_extraction jsonb,
   created_at timestamptz not null default now()
 );
 
@@ -28,3 +30,28 @@ create index if not exists deals_filters_idx on public.deals (city, sector, stag
 alter table public.deals enable row level security;
 drop policy if exists "public read deals" on public.deals;
 create policy "public read deals" on public.deals for select using (true);
+
+create table if not exists public.note_usage (
+  day date primary key,
+  count integer not null default 0
+);
+alter table public.note_usage enable row level security;
+
+create or replace function public.bump_note_usage(cap integer)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  current_count integer;
+begin
+  insert into public.note_usage (day, count) values (current_date, 1)
+  on conflict (day) do update set count = public.note_usage.count + 1
+  returning count into current_count;
+  return current_count <= cap;
+end;
+$$;
+
+revoke execute on function public.bump_note_usage(integer) from public, anon, authenticated;
+grant execute on function public.bump_note_usage(integer) to service_role;

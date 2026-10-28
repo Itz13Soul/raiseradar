@@ -83,3 +83,11 @@ The source is published for viewing and evaluation only; see `LICENSE`. Not lega
 - Extraction quality depends on how much the feed includes. Many feeds give only a short summary, so city, investors or use of funds may be missing. Missing fields stay empty rather than guessed.
 - The channel suggestion is a model suggestion, not a verified fact.
 - The first version runs one source type (RSS/Atom). Public company announcements are a later addition.
+
+## Private console and extra pages
+
+- `/admin` (password from `ADMIN_PASSWORD`, at least 16 characters): paste a public report, extract facts, correct them, publish with hiring signals. Only facts and the source link are stored.
+- `/deal/[id]`: full outreach kit and a personalised note generator (daily cap `NOTE_DAILY_CAP`).
+- `/insights`, `/method` (accuracy measured from reviewed deals against the model's first extraction), `/api/export` (CSV).
+
+Hiring signals are predictions, not confirmed openings. Probability, not proof. Not legal or financial advice.

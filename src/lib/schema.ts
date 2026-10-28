@@ -63,6 +63,8 @@ export type DealRow = {
   source_name: string;
   hiring: Hiring | null;
   is_sample: boolean;
+  reviewed: boolean;
+  raw_extraction: Extraction | null;
   created_at: string;
 };
 

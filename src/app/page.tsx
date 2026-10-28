@@ -63,18 +63,6 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 pb-10 pt-8">
-      <nav className="flex items-center justify-between text-sm">
-        <span className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="relative inline-block h-5 w-5 overflow-hidden rounded-full border border-cyan-400/60">
-            <span className="sweep absolute inset-0" />
-          </span>
-          RaiseRadar
-        </span>
-        <Link href="/brief" className="rounded-full border border-white/15 px-3 py-1 text-zinc-300 transition hover:border-cyan-400/60 hover:text-cyan-200">
-          Weekly brief
-        </Link>
-      </nav>
-
       <section className="mt-6 grid items-center gap-6 md:grid-cols-2">
         <div className="rise">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-cyan-300">India funding intelligence</p>
@@ -106,7 +94,13 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         openings. Verify every deal at its linked source before acting.
       </p>
 
-      <form className="mt-6 grid grid-cols-2 gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur sm:grid-cols-5" method="get">
+      <div className="mt-6 flex justify-end">
+        <a href={`/api/export?${new URLSearchParams(Object.entries(sp).filter(([k, v]) => v && k !== "role") as [string, string][]).toString()}`} className="text-sm text-cyan-300 underline-offset-2 hover:underline">
+          Download CSV
+        </a>
+      </div>
+
+      <form className="mt-3 grid grid-cols-2 gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur sm:grid-cols-5" method="get">
         <input name="city" defaultValue={sp.city} placeholder="City" className="rounded-lg border border-white/10 bg-black/30 p-2 text-sm placeholder:text-zinc-500 focus:border-cyan-400/60 focus:outline-none" />
         <input name="sector" defaultValue={sp.sector} placeholder="Sector" className="rounded-lg border border-white/10 bg-black/30 p-2 text-sm placeholder:text-zinc-500 focus:border-cyan-400/60 focus:outline-none" />
         <select name="stage" defaultValue={sp.stage ?? ""} className="rounded-lg border border-white/10 bg-black/30 p-2 text-sm focus:border-cyan-400/60 focus:outline-none">
@@ -123,7 +117,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
       {loadError && <p className="mt-4 rounded-lg bg-red-500/10 p-3 text-sm text-red-200">{loadError}</p>}
       {!loadError && deals.length === 0 && (
-        <p className="mt-8 text-center text-zinc-500">No deals match yet. The daily ingest fills this list from the configured feeds.</p>
+        <p className="mt-8 text-center text-zinc-500">No deals match these filters yet.</p>
       )}
 
       <ul className="mt-6 space-y-4">
@@ -135,7 +129,12 @@ export default async function Home({ searchParams }: PageProps<"/">) {
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="text-lg font-semibold">
-                {d.company}
+                <Link href={`/deal/${d.id}`} className="hover:text-cyan-200">{d.company}</Link>
+                {d.reviewed && (
+                  <span className="ml-2 rounded-full bg-emerald-400/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-200">
+                    Reviewed
+                  </span>
+                )}
                 {d.is_sample && (
                   <span className="ml-2 rounded-full bg-violet-400/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-violet-200">
                     Sample data
@@ -189,6 +188,9 @@ export default async function Home({ searchParams }: PageProps<"/">) {
                   >
                     Find {d.founder_name ?? "the founder"} on LinkedIn (search link)
                   </a>
+                  <Link href={`/deal/${d.id}`} className="mt-1 block text-sm font-medium text-cyan-200 hover:underline">
+                    Open full kit and personalise
+                  </Link>
                 </div>
               </div>
             )}
