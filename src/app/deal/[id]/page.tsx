@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import CopyButton from "../../../components/CopyButton";
 import NoteBuilder from "../../../components/NoteBuilder";
 import { supabaseAnon } from "../../../lib/supabase";
-import { founderSearchUrl } from "../../../lib/signals";
+import { firstFounder, founderSearchUrl } from "../../../lib/signals";
 import { isHttpUrl, type DealRow } from "../../../lib/schema";
 
 export const revalidate = 300;
@@ -77,7 +77,7 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Find {deal.founder_name ?? "the founder"} on LinkedIn (search link)
+              Find {firstFounder(deal.founder_name) ?? "the founder"} on LinkedIn (search link)
             </a>
           </div>
         </section>

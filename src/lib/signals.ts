@@ -24,7 +24,26 @@ export async function hiringSignals(deal: Extraction): Promise<Hiring> {
   };
   const pitch = process.env.OUTREACH_SENDER_PITCH?.trim() || "a candidate or vendor who wants to help the company grow";
   const user = `Sender pitch: ${pitch}\nFunding facts (JSON): ${JSON.stringify(facts)}`;
-  return llmJson(HiringSchema, { system: SYSTEM, user });
+  const out = await llmJson(HiringSchema, { system: SYSTEM, user });
+  return { ...out, roles: out.roles.map((r) => guardConfidence(r, deal.use_of_funds)) };
+}
+
+const FUNCTION_WORDS: [RegExp, RegExp][] = [
+  [/engineer|developer|devops|architect|data scientist|ml\b/i, /engineer|tech|product development|platform|software|\bai\b/i],
+  [/sales|business development|account executive/i, /sales|go-to-market|distribution|expansion|market/i],
+  [/marketing|growth|brand|content/i, /marketing|brand|growth|acquisition|campaign/i],
+  [/operations|supply chain|logistics|manufactur|procurement/i, /operations|manufactur|supply|logistics|capacity|production/i],
+  [/research|scientist|r&d/i, /research|r&d|clinical|prototype/i],
+  [/customer|support|success/i, /customer|support|service/i],
+  [/caregiver|trainer|training|recruit|people|hr\b|talent/i, /recruit|training|hiring|team|talent/i],
+  [/finance|compliance|legal/i, /finance|compliance|legal|regulat/i],
+];
+
+function guardConfidence<T extends { role: string; confidence: "low" | "medium" | "high" }>(role: T, uses: string | null): T {
+  if (role.confidence !== "high") return role;
+  const text = uses ?? "";
+  const named = FUNCTION_WORDS.some(([roleRe, useRe]) => roleRe.test(role.role) && useRe.test(text));
+  return named ? role : { ...role, confidence: "medium" };
 }
 
 const NoteSchema = z.object({ note: z.string().min(20).max(900) });
@@ -58,7 +77,13 @@ export async function personalNote(
   return out.note.trim();
 }
 
+export function firstFounder(founder?: string | null): string | null {
+  if (!founder) return null;
+  return founder.split(/,|\band\b|&/i)[0].trim() || null;
+}
+
 export function founderSearchUrl(company: string, founder?: string | null): string {
-  const q = founder ? `${founder} ${company} LinkedIn` : `${company} founder LinkedIn`;
+  const lead = firstFounder(founder);
+  const q = lead ? `${lead} ${company} LinkedIn` : `${company} founder LinkedIn`;
   return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
 }

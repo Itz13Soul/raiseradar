@@ -2,7 +2,7 @@ import Link from "next/link";
 import GlobeLoader from "../components/GlobeLoader";
 import CopyButton from "../components/CopyButton";
 import { supabaseAnon } from "../lib/supabase";
-import { founderSearchUrl } from "../lib/signals";
+import { firstFounder, founderSearchUrl } from "../lib/signals";
 import { STAGES, isHttpUrl, type DealRow } from "../lib/schema";
 
 export const revalidate = 300;
@@ -186,7 +186,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Find {d.founder_name ?? "the founder"} on LinkedIn (search link)
+                    Find {firstFounder(d.founder_name) ?? "the founder"} on LinkedIn (search link)
                   </a>
                   <Link href={`/deal/${d.id}`} className="mt-1 block text-sm font-medium text-cyan-200 hover:underline">
                     Open full kit and personalise

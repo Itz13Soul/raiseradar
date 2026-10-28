@@ -41,3 +41,12 @@ describe("schema tolerance", () => {
     assert.equal(out.founder_name, "A, B");
   });
 });
+
+describe("founder helper", () => {
+  it("takes the first named founder", async () => {
+    const { firstFounder } = await import("../src/lib/signals");
+    assert.equal(firstFounder("Anish Priyadarshi and Sanjeev Kumar"), "Anish Priyadarshi");
+    assert.equal(firstFounder("A B, C D"), "A B");
+    assert.equal(firstFounder(null), null);
+  });
+});
