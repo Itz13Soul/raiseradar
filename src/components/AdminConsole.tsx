@@ -25,7 +25,7 @@ export default function AdminConsole() {
         headers: { "content-type": "application/json" },
         body: body === undefined ? undefined : JSON.stringify(body),
       });
-      const data = (await res.json()) as T & { error?: string };
+      const data = (await res.json().catch(() => ({ error: "The server took too long or failed. Try again in a minute." }))) as T & { error?: string };
       if (!res.ok) {
         setStatus(data.error ?? "Request failed.");
         return null;

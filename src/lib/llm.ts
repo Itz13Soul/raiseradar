@@ -22,23 +22,30 @@ async function sleep(ms: number) {
 
 type JsonBody = Record<string, unknown>;
 
+const BUDGET_MS = 50000;
+let deadline = 0;
+
 async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<JsonBody> {
-  let lastErr: unknown;
+  let lastErr: unknown = new Error("LLM time budget exhausted");
   for (let attempt = 0; attempt < 4; attempt++) {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json", ...headers },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(40000),
-    });
-    if (res.ok) return res.json();
-    const text = await res.text();
-    lastErr = new Error(`LLM HTTP ${res.status}: ${text.slice(0, 300)}`);
-    if (res.status === 429 || res.status >= 500) {
-      await sleep(2000 * (attempt + 1));
-      continue;
+    const remaining = deadline - Date.now();
+    if (remaining < 4000) break;
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "content-type": "application/json", ...headers },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(Math.min(20000, remaining)),
+      });
+      if (res.ok) return res.json();
+      const text = await res.text();
+      lastErr = new Error(`LLM HTTP ${res.status}: ${text.slice(0, 300)}`);
+      if (res.status !== 429 && res.status < 500) throw lastErr;
+    } catch (e) {
+      if (e instanceof Error && e.message.startsWith("LLM HTTP 4")) throw e;
+      lastErr = e;
     }
-    throw lastErr;
+    await sleep(1500 * (attempt + 1));
   }
   throw lastErr;
 }
@@ -92,6 +99,7 @@ async function callAnthropic({ system, user }: Req): Promise<string> {
 }
 
 export async function llmJson<T>(schema: z.ZodType<T>, req: Req): Promise<T> {
+  deadline = Date.now() + BUDGET_MS;
   const provider = (process.env.LLM_PROVIDER ?? "gemini").toLowerCase();
   const call = provider === "anthropic" ? callAnthropic : callGemini;
   let lastErr: unknown;
