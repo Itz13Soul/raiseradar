@@ -24,12 +24,12 @@ type JsonBody = Record<string, unknown>;
 
 async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<JsonBody> {
   let lastErr: unknown;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < 2; attempt++) {
     const res = await fetch(url, {
       method: "POST",
       headers: { "content-type": "application/json", ...headers },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(30000),
+      signal: AbortSignal.timeout(52000),
     });
     if (res.ok) return res.json();
     const text = await res.text();
