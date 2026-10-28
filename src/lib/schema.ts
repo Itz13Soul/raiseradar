@@ -26,7 +26,10 @@ export const ExtractionSchema = z.object({
   city: z.string().nullable(),
   announced_date: z.string().nullable(),
   use_of_funds: z.string().nullable(),
-  founder_name: z.string().nullable(),
+  founder_name: z.preprocess(
+    (v) => (Array.isArray(v) ? v.filter((x) => typeof x === "string").join(", ") || null : v),
+    z.string().nullable(),
+  ),
 });
 export type Extraction = z.infer<typeof ExtractionSchema>;
 

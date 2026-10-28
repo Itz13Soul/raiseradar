@@ -33,3 +33,11 @@ describe("csv", () => {
     assert.equal(toCsv(["h"], [["x"]]), "h\r\nx\r\n");
   });
 });
+
+describe("schema tolerance", () => {
+  it("joins a founder list into one string", async () => {
+    const { ExtractionSchema } = await import("../src/lib/schema");
+    const out = ExtractionSchema.parse({ ...base, founder_name: ["A", "B"] });
+    assert.equal(out.founder_name, "A, B");
+  });
+});
