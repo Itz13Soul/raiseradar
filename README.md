@@ -2,7 +2,7 @@
 
 Every Indian funding round, turned into who is likely to hire, and what to say.
 
-**Status: MVP code complete, not yet deployed. No accuracy score has been measured yet (see Evaluation).**
+**Status: live at https://raiseradar-woad.vercel.app with 15 reviewed real deals. Early accuracy result below; the 50-deal target is not yet met.**
 
 ## Wedge
 
@@ -47,7 +47,7 @@ Deploy to Vercel (personal account), set the same environment variables, and `ve
 
 Target (from the master plan): extraction accuracy above 95% on 50 hand-labelled deals.
 
-**Result: not yet measured.** `eval/labelled.json` does not exist yet. To produce a real score:
+**Early result (n = 15, below the 50-deal target):** on 15 reviewed deals the model's first extraction matched the human-checked value on all five scored fields (company, amount, stage, city, date). Caveat: the input was short summary text, which is easier than raw articles, and the sample is too small to claim 95%. The live figure is on the `/method` page. To produce the full 50-deal score:
 
 1. Copy `eval/labelled.template.json` to `eval/labelled.json`.
 2. Label at least 50 real deals by hand (title, snippet, source link, expected fields).
