@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { fetchFeed } from "../../../lib/feeds";
 import { extractDeal } from "../../../lib/extract";
@@ -9,9 +10,16 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
-export async function GET(req: Request) {
+function authorised(req: Request): boolean {
   const secret = process.env.CRON_SECRET;
-  if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
+  if (!secret) return false;
+  const given = Buffer.from(req.headers.get("authorization") ?? "");
+  const expected = Buffer.from(`Bearer ${secret}`);
+  return given.length === expected.length && timingSafeEqual(given, expected);
+}
+
+export async function GET(req: Request) {
+  if (!authorised(req)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 

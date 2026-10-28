@@ -65,6 +65,14 @@ npm run typecheck
 
 Also run [gitleaks](https://github.com/gitleaks/gitleaks) in CI before making the repo public.
 
+## Secrets
+
+- Keys exist only as environment variables. Production values are set in Vercel as Sensitive variables, never in the repo.
+- A git pre-commit and pre-push hook plus a CI scan block pushes that contain key patterns.
+- Only the public Supabase anon key reaches the browser. Row-level security allows read-only access; writes need the server-side service key.
+- The ingest endpoint requires a secret bearer token and compares it in constant time.
+- Restrict the Gemini key by quota in Google AI Studio and rotate any key you suspect has leaked.
+
 ## Copyright
 
 Copyright (c) 2026 Divyansh Srivastava. All rights reserved. Developed by Divyansh Srivastava.
