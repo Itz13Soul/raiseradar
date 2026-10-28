@@ -48,7 +48,7 @@ export default async function Brief() {
         Back to deals
       </Link>
       <h1 className="mt-2 text-2xl font-semibold">Weekly brief</h1>
-      <p className="text-sm text-zinc-600">Covers deals added in the last 7 days. Sample rows are excluded.</p>
+      <p className="text-sm text-zinc-400">Covers deals added in the last 7 days. Sample rows are excluded.</p>
       {deals.length === 0 ? (
         <p className="mt-4">No deals were added in the last 7 days.</p>
       ) : (

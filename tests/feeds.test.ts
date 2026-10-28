@@ -48,3 +48,12 @@ test("only http and https links are accepted", () => {
 test("company key ignores case and punctuation", () => {
   assert.equal(companyKey("Zepto Pvt. Ltd."), companyKey("zepto pvt ltd"));
 });
+
+test("city vectors lie on the unit sphere and unknown cities are skipped", async () => {
+  const { cityToVector } = await import("../src/lib/cities");
+  const v = cityToVector("Bengaluru");
+  assert.ok(v);
+  assert.ok(Math.abs(Math.hypot(...v) - 1) < 1e-9);
+  assert.ok(Math.abs(v[1] - Math.sin((12.9716 * Math.PI) / 180)) < 1e-9);
+  assert.equal(cityToVector("Atlantis"), null);
+});

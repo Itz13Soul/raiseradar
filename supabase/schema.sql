@@ -1,24 +1,23 @@
-
 create extension if not exists "pgcrypto";
 
 create table if not exists public.deals (
   id uuid primary key default gen_random_uuid(),
   company text not null,
-  company_key text not null,                 -- lowercased, alphanumerics only, for de-duplication
-  amount_value numeric,                      -- full units as stated (no currency conversion)
-  currency text,                             -- USD | INR | OTHER, as stated in the source
-  amount_raw text,                           -- amount exactly as written in the source
+  company_key text not null,
+  amount_value numeric,
+  currency text,
+  amount_raw text,
   stage text,
   investors text[] not null default '{}',
   sector text,
   city text,
   announced_date date,
   use_of_funds text,
-  founder_name text,                         -- only if named in the source
+  founder_name text,
   source_url text not null unique,
   source_name text not null,
-  hiring jsonb,                              -- predicted roles, outreach note, channel (see src/lib/schema.ts)
-  is_sample boolean not null default false,  -- true = demo row, labelled on screen
+  hiring jsonb,
+  is_sample boolean not null default false,
   created_at timestamptz not null default now()
 );
 
