@@ -26,7 +26,7 @@ const BUDGET_MS = 50000;
 let deadline = 0;
 
 async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<JsonBody> {
-  let lastErr: unknown = new Error("LLM time budget exhausted");
+  let lastErr: unknown = new Error("LLM time budget exhausted before a request could start");
   for (let attempt = 0; attempt < 4; attempt++) {
     const remaining = deadline - Date.now();
     if (remaining < 4000) break;
@@ -56,7 +56,10 @@ async function callGemini({ system, user }: Req): Promise<string> {
   const fallback = process.env.GEMINI_FALLBACK_MODEL?.trim();
   const models = fallback && fallback !== primary ? [primary, fallback] : [primary];
   let lastErr: unknown;
-  for (const model of models) {
+  const overall = deadline;
+  for (let i = 0; i < models.length; i++) {
+    const model = models[i];
+    deadline = i === models.length - 1 ? overall : Date.now() + Math.floor((overall - Date.now()) / 2);
     try {
       const data = await postJson(
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
@@ -72,9 +75,10 @@ async function callGemini({ system, user }: Req): Promise<string> {
       if (!text) throw new Error("Gemini returned no text");
       return text;
     } catch (e) {
-      lastErr = e;
+      lastErr = lastErr && String(e).includes("budget exhausted") ? lastErr : e;
     }
   }
+  deadline = overall;
   throw lastErr;
 }
 
