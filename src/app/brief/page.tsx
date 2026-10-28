@@ -2,7 +2,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { llmJson } from "../../lib/llm";
 import { supabaseAnon } from "../../lib/supabase";
-import type { DealRow } from "../../lib/schema";
+import { daysAgoIso, type DealRow } from "../../lib/schema";
 
 export const revalidate = 3600;
 
@@ -14,7 +14,7 @@ function tally(values: (string | null)[]): [string, number][] {
 
 export default async function Brief() {
   const db = supabaseAnon();
-  const since = new Date(Date.now() - 7 * 86400_000).toISOString().slice(0, 10);
+  const since = daysAgoIso(7);
   let deals: DealRow[] = [];
   if (db) {
     const { data } = await db.from("deals").select("*").gte("created_at", since).eq("is_sample", false).limit(500);

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { supabaseAnon } from "../lib/supabase";
 import { founderSearchUrl } from "../lib/signals";
-import { STAGES, type DealRow } from "../lib/schema";
+import { STAGES, isHttpUrl, type DealRow } from "../lib/schema";
 
 export const revalidate = 300;
 
@@ -14,7 +14,12 @@ function money(d: DealRow): string {
 }
 
 export default async function Home({ searchParams }: PageProps<"/">) {
-  const sp = (await searchParams) as Params;
+  const raw = await searchParams;
+  const pick = (k: string) => {
+    const v = raw[k];
+    return (Array.isArray(v) ? v[0] : v)?.trim().slice(0, 60) || undefined;
+  };
+  const sp: Params = { city: pick("city"), sector: pick("sector"), stage: pick("stage"), role: pick("role") };
   const db = supabaseAnon();
   let deals: DealRow[] = [];
   let loadError: string | null = null;
@@ -27,8 +32,8 @@ export default async function Home({ searchParams }: PageProps<"/">) {
       .select("*")
       .order("announced_date", { ascending: false, nullsFirst: false })
       .limit(200);
-    if (sp.city) q = q.ilike("city", sp.city);
-    if (sp.sector) q = q.ilike("sector", `%${sp.sector}%`);
+    if (sp.city) q = q.ilike("city", sp.city.replace(/[%_]/g, ""));
+    if (sp.sector) q = q.ilike("sector", `%${sp.sector.replace(/[%_]/g, "")}%`);
     if (sp.stage) q = q.eq("stage", sp.stage);
     const { data, error } = await q;
     if (error) loadError = error.message;
@@ -134,7 +139,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
             <p className="mt-3 text-xs text-zinc-500">
               Source:{" "}
-              <a href={d.source_url} className="underline" target="_blank" rel="noopener noreferrer">
+              <a href={isHttpUrl(d.source_url) ? d.source_url : "#"} className="underline" target="_blank" rel="noopener noreferrer">
                 {d.source_name}
               </a>
             </p>

@@ -20,13 +20,16 @@ async function sleep(ms: number) {
   await new Promise((r) => setTimeout(r, ms));
 }
 
-async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<any> {
+type JsonBody = Record<string, unknown>;
+
+async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<JsonBody> {
   let lastErr: unknown;
   for (let attempt = 0; attempt < 3; attempt++) {
     const res = await fetch(url, {
       method: "POST",
       headers: { "content-type": "application/json", ...headers },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(30000),
     });
     if (res.ok) return res.json();
     const text = await res.text();
@@ -52,7 +55,8 @@ async function callGemini({ system, user }: Req): Promise<string> {
       generationConfig: { responseMimeType: "application/json", temperature: 0 },
     },
   );
-  const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text ?? "").join("");
+  const candidates = data.candidates as { content?: { parts?: { text?: string }[] } }[] | undefined;
+  const text = candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("");
   if (!text) throw new Error("Gemini returned no text");
   return text;
 }
@@ -71,7 +75,8 @@ async function callAnthropic({ system, user }: Req): Promise<string> {
       messages: [{ role: "user", content: user }],
     },
   );
-  const text = data?.content?.map((c: any) => c.text ?? "").join("");
+  const blocks = data.content as { text?: string }[] | undefined;
+  const text = blocks?.map((c) => c.text ?? "").join("");
   if (!text) throw new Error("Anthropic returned no text");
   return text;
 }

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { fetchFeed } from "../../../lib/feeds";
 import { extractDeal } from "../../../lib/extract";
 import { hiringSignals } from "../../../lib/signals";
-import { companyKey } from "../../../lib/schema";
+import { companyKey, isHttpUrl } from "../../../lib/schema";
 import { supabaseService } from "../../../lib/supabase";
 
 export const runtime = "nodejs";
@@ -28,7 +28,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "FEED_URLS is empty. Add only feeds whose terms permit reuse." }, { status: 400 });
   }
 
-  const max = Math.max(1, Number(process.env.MAX_ITEMS_PER_RUN ?? 15));
+  const max = Math.max(1, Number(process.env.MAX_ITEMS_PER_RUN ?? 8));
   const db = supabaseService();
   const report = { feeds: feeds.length, seen: 0, skippedExisting: 0, notFunding: 0, inserted: 0, errors: [] as string[] };
 
@@ -43,7 +43,7 @@ export async function GET(req: Request) {
 
     for (const item of items) {
       if (report.inserted + report.notFunding >= max) break;
-      if (!item.link) continue;
+      if (!isHttpUrl(item.link)) continue;
       report.seen++;
 
       const { data: existing } = await db.from("deals").select("id").eq("source_url", item.link).maybeSingle();
@@ -64,8 +64,8 @@ export async function GET(req: Request) {
           .select("id")
           .eq("company_key", key)
           .eq("stage", d.stage ?? "")
-          .maybeSingle();
-        if (dupe) {
+          .limit(1);
+        if (dupe && dupe.length > 0) {
           report.skippedExisting++;
           continue;
         }

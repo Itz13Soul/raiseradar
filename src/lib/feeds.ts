@@ -10,10 +10,17 @@ export type FeedItem = {
 
 const parser = new XMLParser({ ignoreAttributes: false, textNodeName: "#text" });
 
+type XmlNode = Record<string, unknown>;
+
+function asNodes(v: unknown): XmlNode[] {
+  if (Array.isArray(v)) return v.filter((x): x is XmlNode => typeof x === "object" && x !== null);
+  return typeof v === "object" && v !== null ? [v as XmlNode] : [];
+}
+
 function text(v: unknown): string {
   if (v == null) return "";
   if (typeof v === "string") return v;
-  if (typeof v === "object" && "#text" in (v as any)) return String((v as any)["#text"]);
+  if (typeof v === "object" && "#text" in v) return String((v as XmlNode)["#text"]);
   return String(v);
 }
 
@@ -24,15 +31,19 @@ function stripHtml(s: string): string {
 export async function fetchFeed(url: string): Promise<FeedItem[]> {
   const res = await fetch(url, {
     headers: { "user-agent": "RaiseRadarBot/0.1 (personal portfolio project; respects feed terms)" },
+    signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`Feed ${url} returned HTTP ${res.status}`);
-  const xml = parser.parse(await res.text());
+  return parseFeed(await res.text(), url);
+}
 
-  const channel = xml?.rss?.channel;
+export function parseFeed(raw: string, url: string): FeedItem[] {
+  const xml = parser.parse(raw);
+
+  const channel = xml?.rss?.channel as XmlNode | undefined;
   if (channel) {
     const sourceName = stripHtml(text(channel.title)) || new URL(url).hostname;
-    const items = Array.isArray(channel.item) ? channel.item : channel.item ? [channel.item] : [];
-    return items.map((i: any) => ({
+    return asNodes(channel.item).map((i) => ({
       title: stripHtml(text(i.title)),
       link: text(i.link).trim(),
       publishedAt: i.pubDate ? new Date(text(i.pubDate)).toISOString().slice(0, 10) : undefined,
@@ -41,13 +52,12 @@ export async function fetchFeed(url: string): Promise<FeedItem[]> {
     }));
   }
 
-  const feed = xml?.feed;
+  const feed = xml?.feed as XmlNode | undefined;
   if (feed) {
     const sourceName = stripHtml(text(feed.title)) || new URL(url).hostname;
-    const entries = Array.isArray(feed.entry) ? feed.entry : feed.entry ? [feed.entry] : [];
-    return entries.map((e: any) => {
-      const links = Array.isArray(e.link) ? e.link : [e.link];
-      const href = links.find((l: any) => l?.["@_rel"] === "alternate")?.["@_href"] ?? links[0]?.["@_href"] ?? "";
+    return asNodes(feed.entry).map((e) => {
+      const links = asNodes(e.link);
+      const href = links.find((l) => l["@_rel"] === "alternate")?.["@_href"] ?? links[0]?.["@_href"] ?? "";
       const when = text(e.published) || text(e.updated);
       return {
         title: stripHtml(text(e.title)),

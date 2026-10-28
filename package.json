@@ -10,7 +10,8 @@
     "eval": "node --env-file=.env.local --import tsx eval/run.ts",
     "secret-scan": "bash scripts/secret-scan.sh",
     "typecheck": "tsc --noEmit",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "prepare": "git config core.hooksPath .githooks || true",
+    "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

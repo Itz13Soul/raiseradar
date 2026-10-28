@@ -69,3 +69,16 @@ export type DealRow = {
 export function companyKey(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
+
+export function daysAgoIso(days: number): string {
+  return new Date(Date.now() - days * 86400_000).toISOString().slice(0, 10);
+}
+
+export function isHttpUrl(value: string): boolean {
+  try {
+    const u = new URL(value);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
