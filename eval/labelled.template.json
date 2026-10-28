@@ -1,0 +1,16 @@
+[
+  {
+    "title": "REPLACE: headline copied from a real funding article",
+    "snippet": "REPLACE: the feed summary or the first paragraph of that article",
+    "publishedAt": "YYYY-MM-DD",
+    "source_url": "REPLACE: link to the article you read",
+    "expected": {
+      "is_funding_round": true,
+      "company": "REPLACE",
+      "amount_value": 0,
+      "stage": "Seed",
+      "city": null,
+      "announced_date": "YYYY-MM-DD"
+    }
+  }
+]
