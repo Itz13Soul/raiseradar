@@ -57,7 +57,7 @@ function thinking(model: string): Record<string, unknown> {
   return {};
 }
 
-const HEDGE_MS = Number(process.env.GEMINI_HEDGE_MS ?? 5000);
+const HEDGE_MS = Number(process.env.GEMINI_HEDGE_MS ?? 1500);
 
 class HttpError extends Error {
   constructor(public status: number, text: string) {
