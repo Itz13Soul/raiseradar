@@ -1,40 +1,23 @@
 # RaiseRadar: case study
 
-Copyright 2026 Divyansh Srivastava. All rights reserved. Developed by Divyansh Srivastava.
+**Problem.** Funding news tells you a company raised money. It does not tell a job seeker who is likely to hire next, for which roles, or what to say.
 
-**Live:** https://raiseradar-woad.vercel.app
+**Existing tools.** Entrackr weekly funding reports and Inc42 Datalabs report the deal and stop.
 
-## Problem
-A freshly funded startup hires within weeks, but the people who benefit, job seekers and sales teams, usually learn about the round late and have no idea which roles or needs follow. Existing funding trackers such as Entrackr and Inc42 Datalabs report the deal and stop.
+**What I built.** A daily pipeline that reads funding feeds, extracts each round into a fixed validated schema (company, amount, stage, investors, sector, city, date, use of funds), then adds up to five predicted roles with a stated reason and a low/medium/high confidence, a suggested channel and a three-line outreach note. Filters by city, sector, stage and role, plus a weekly brief whose counts are computed in code.
 
-## What I built
-For each funding round, RaiseRadar shows the facts, a prediction of the roles the company is likely to hire for next (each with a stated reason and a confidence), a three-line starter note, and a link to the source. A personaliser rewrites the note for a job seeker or a seller from one line about themselves. Pages for market insights, a weekly brief, a CSV export and a method page with a measured accuracy score complete it.
+**Decisions.**
+- Hiring signals are labelled predictions, not confirmed openings.
+- Only extracted facts and the source link are stored; article text is never saved.
+- The app ships with no feeds configured, so the owner confirms each feed's terms first.
+- The "find founder" link is a plain search URL. No scraping of profiles.
 
-## How it works
-1. A person pastes the relevant text from a public report into a private console.
-2. A language model extracts company, amount, stage, investors, sector, city, date and use of funds.
-3. The person checks and corrects every field. Only the facts and the source link are stored, never the article text.
-4. A second call predicts roles from stage, sector and stated use of funds. A code rule downgrades any "high" confidence unless the use of funds names that function.
+**Evidence.** 50 items from Entrackr weekly reports (Sep 7 to Oct 17, 2026), labelled by me. Funding-round detection, company, amount, city and date were each 100% (50/50). Strict all-fields accuracy was 54%, and 100% once "Other" is treated as "stage not stated". The gap is a labelling convention, and both numbers are published. Labels are single-author and the inputs are short summaries, so 100% is an upper bound.
 
-Stack: Next.js, TypeScript, Tailwind, Supabase (row-level security, public read, writes only through a server key), Vercel, Gemini behind one wrapper with retries and a fallback model, and a 3D globe built with three.js.
+**Speed work.** The slow model now races a faster one; a repeat input returns from cache; the server runs in Mumbai next to the database.
 
-## Decisions and trade-offs
-- **No scraping.** Inc42 forbids automated access without written consent, so the data path is human-in-the-loop. The ingest job is built but disabled until a feed is approved. Permission requests are drafted.
-- **Keys stay server-side.** Secrets live in environment variables; pre-commit and pre-push hooks and CI scan for them; the public key is limited by database policy.
-- **Cost control.** Public note generation has a daily cap enforced in the database.
-- **Honest measurement.** Accuracy is the share of fields where the model's first extraction equals the human-corrected value.
+**Limits.** 15 reviewed real deals live. Single labeller. No live feeds until terms are confirmed.
 
-## Results so far
-- 15 real deals from public reports, all reviewed, all with hiring signals.
-- First-pass extraction matched the checked value on all five scored fields for 15 of 15 deals. This is an early number: the input was short summary text, the sample is small, and the target is 95% on 50 deals.
-- Role predictions are not yet scored against real job postings.
+**Next.** A second labeller, full-article inputs, and real usage analytics.
 
-## Bugs found by using it
-- Extraction crashed when a deal named several founders; the schema now accepts a list.
-- The model marked roles "high" confidence without support; a rule now enforces the stated standard.
-- Overloaded model calls timed out the request; calls now retry within a fixed time budget.
-
-## What I would do next
-Reach 50 reviewed deals, score role predictions against real job postings one month later, and add an approved feed.
-
-Hiring signals are predictions, not confirmed openings. Probability, not proof. Not legal or financial advice.
+Live: https://raiseradar-woad.vercel.app

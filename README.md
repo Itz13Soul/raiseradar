@@ -106,3 +106,5 @@ The source is published for viewing and evaluation only; see `LICENSE`. Not lega
 - `/insights`, `/method` (accuracy measured from reviewed deals against the model's first extraction), `/api/export` (CSV).
 
 Hiring signals are predictions, not confirmed openings. Probability, not proof. Not legal or financial advice.
+
+Read the one-page [case study](CASE_STUDY.md).
