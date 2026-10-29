@@ -1,0 +1,178 @@
+{
+ "run_at": "2026-10-29",
+ "n": 50,
+ "model": "gemini via live /api/admin/extract",
+ "strict": {
+  "per_field": {
+   "is_funding_round": 1.0,
+   "company": 1.0,
+   "amount_value": 1.0,
+   "stage": 0.54,
+   "city": 1.0,
+   "announced_date": 1.0
+  },
+  "all_fields_correct": 0.54,
+  "n_fail": 23,
+  "fails": [
+   [
+    0,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    5,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    9,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    16,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    17,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    18,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    19,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    20,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    21,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    22,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    23,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    26,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    30,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    33,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    34,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    37,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    38,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    39,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    40,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    41,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    42,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    43,
+    "stage",
+    null,
+    "Other"
+   ],
+   [
+    49,
+    "stage",
+    null,
+    "Other"
+   ]
+  ]
+ },
+ "lax": {
+  "per_field": {
+   "is_funding_round": 1.0,
+   "company": 1.0,
+   "amount_value": 1.0,
+   "stage": 1.0,
+   "city": 1.0,
+   "announced_date": 1.0
+  },
+  "all_fields_correct": 1.0,
+  "n_fail": 0,
+  "fails": []
+ },
+ "sources": [
+  "https://entrackr.com/report/weekly-funding-report-weekly-funding-report/funding-and-acquisitions-in-indian-startups-this-week-oct-12-oct-17-12683867",
+  "https://entrackr.com/report/weekly-funding-report-weekly-funding-report/funding-and-acquisitions-in-indian-startups-this-week-oct-5-oct-10-12662210",
+  "https://entrackr.com/report/weekly-funding-report-weekly-funding-report/funding-and-acquisitions-in-indian-startups-this-week-sep-07-sep-12-12523070",
+  "https://entrackr.com/report/weekly-funding-report-weekly-funding-report/funding-and-acquisitions-in-indian-startups-this-week-sep-14-sep-19-12551215",
+  "https://entrackr.com/report/weekly-funding-report-weekly-funding-report/funding-and-acquisitions-in-indian-startups-this-week-sep-21-sep-26-12577542"
+ ],
+ "note": "Labels by project author; inputs are condensed summaries; stage strict vs Other=not stated"
+}

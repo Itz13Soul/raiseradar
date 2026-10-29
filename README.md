@@ -2,7 +2,7 @@
 
 Every Indian funding round, turned into who is likely to hire, and what to say.
 
-**Status: live at https://raiseradar-woad.vercel.app with 15 reviewed real deals. Early accuracy result below; the 50-deal target is not yet met.**
+**Status: live at https://raiseradar-woad.vercel.app with 15 reviewed real deals. A 50-item extraction evaluation is reported below.**
 
 ## Wedge
 
@@ -47,12 +47,27 @@ Deploy to Vercel (personal account), set the same environment variables, and `ve
 
 Target (from the master plan): extraction accuracy above 95% on 50 hand-labelled deals.
 
-**Early result (n = 15, below the 50-deal target):** on 15 reviewed deals the model's first extraction matched the human-checked value on all five scored fields (company, amount, stage, city, date). Caveat: the input was short summary text, which is easier than raw articles, and the sample is too small to claim 95%. The live figure is on the `/method` page. To produce the full 50-deal score:
+**50-item evaluation (run 2026-10-29, live extraction endpoint):** 50 items taken from Entrackr weekly funding reports (Sep 7 to Oct 17, 2026): 38 funding rounds with a stated amount, 7 rounds with an undisclosed amount, 5 non-funding items (leadership changes, an acquisition, a stake purchase). Labels were written by the project author from the same report entries, with no second labeller, and the inputs are short condensed summaries, which are easier than full articles.
+
+| Field | Accuracy |
+| --- | --- |
+| is_funding_round | 100% (50/50) |
+| company | 100% |
+| amount (within 1%) | 100% |
+| city | 100% |
+| announced date | 100% |
+| stage, strict (null label vs "Other") | 54% |
+| stage, "Other" treated as not stated | 100% |
+| All fields correct, strict | 54% (27/50) |
+| All fields correct, "Other" = not stated | 100% (50/50) |
+
+The strict stage miss is a labelling convention, not a wrong stage: when a report does not state the round, I labelled it null while the model returns the schema value "Other". Both numbers are shown so the choice is visible. Treat the 100% as an upper bound: small, easy, same-author labels. Per-item results are in `eval/results.json`; source links point to the Entrackr weekly reports. The live `/method` page also shows a running figure from reviewed deals.
+
+To reproduce:
 
 1. Copy `eval/labelled.template.json` to `eval/labelled.json`.
 2. Label at least 50 real deals by hand (title, snippet, source link, expected fields).
 3. Run `npm run eval`. It reports per-field and all-fields-correct accuracy and writes `eval/results.json`.
-4. Paste the real numbers here.
 
 `eval/labelled.json` is git-ignored because it holds third-party article snippets. Publish the scores and the source links, not the text.
 

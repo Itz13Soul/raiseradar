@@ -53,6 +53,16 @@ export default async function Method() {
         </div>
       )}
 
+      <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.035] p-5 text-sm text-zinc-300">
+        <p className="font-medium text-zinc-100">50-item evaluation, 29 Oct 2026</p>
+        <p className="mt-2">
+          50 items from Entrackr weekly funding reports: 38 rounds with amounts, 7 undisclosed-amount rounds and 5 non-funding items. Company, amount, city, date and funding-or-not were 100% correct (50 of 50). Stage was 100% when &quot;Other&quot; counts as not stated, and 54% under a strict match, because unstated rounds were labelled blank while the model returns &quot;Other&quot;.
+        </p>
+        <p className="mt-2 text-zinc-400">
+          Caveats: labels were written by the project author from the same entries, there is no second labeller, and inputs are short summaries, so treat this as an upper bound.
+        </p>
+      </div>
+
       <h2 className="mt-10 text-xl font-semibold">Limits</h2>
       <ul className="mt-2 list-disc space-y-2 pl-5 text-sm text-zinc-300">
         <li>Hiring signals are predictions, not confirmed openings. Probability, not proof. Not legal or financial advice.</li>
