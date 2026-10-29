@@ -32,7 +32,7 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 pb-10">
-      <Link href="/" className="text-sm text-zinc-400 hover:text-zinc-200">
+      <Link href="/deals" className="text-sm text-zinc-400 hover:text-zinc-200">
         Back to deals
       </Link>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight">{deal.company}</h1>

@@ -44,7 +44,7 @@ export default async function Brief() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8">
-      <Link href="/" className="text-sm underline">
+      <Link href="/deals" className="text-sm underline">
         Back to deals
       </Link>
       <h1 className="mt-2 text-2xl font-semibold">Weekly brief</h1>
