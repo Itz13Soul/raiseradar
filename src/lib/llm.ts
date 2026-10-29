@@ -27,7 +27,7 @@ let deadline = 0;
 
 async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<JsonBody> {
   let lastErr: unknown = new Error("LLM time budget exhausted before a request could start");
-  for (let attempt = 0; attempt < 4; attempt++) {
+  for (let attempt = 0; attempt < 3; attempt++) {
     const remaining = deadline - Date.now();
     if (remaining < 4000) break;
     try {
@@ -45,41 +45,100 @@ async function postJson(url: string, headers: Record<string, string>, body: unkn
       if (e instanceof Error && e.message.startsWith("LLM HTTP 4")) throw e;
       lastErr = e;
     }
-    await sleep(1500 * (attempt + 1));
+    await sleep(600 * (attempt + 1));
   }
   throw lastErr;
 }
 
-async function callGemini({ system, user }: Req): Promise<string> {
-  const key = requireEnv("GEMINI_API_KEY");
-  const primary = requireEnv("GEMINI_MODEL");
-  const fallback = process.env.GEMINI_FALLBACK_MODEL?.trim();
-  const models = fallback && fallback !== primary ? [primary, fallback] : [primary];
-  let lastErr: unknown;
-  const overall = deadline;
-  for (let i = 0; i < models.length; i++) {
-    const model = models[i];
-    deadline = i === models.length - 1 ? overall : Date.now() + Math.floor((overall - Date.now()) / 2);
+function thinking(model: string): Record<string, unknown> {
+  if (/2\.5-flash/.test(model)) return { thinkingConfig: { thinkingBudget: 0 } };
+  if (/2\.5-pro/.test(model)) return { thinkingConfig: { thinkingBudget: 128 } };
+  if (/gemini-3/.test(model)) return { thinkingConfig: { thinkingLevel: "low" } };
+  return {};
+}
+
+const HEDGE_MS = Number(process.env.GEMINI_HEDGE_MS ?? 5000);
+
+class HttpError extends Error {
+  constructor(public status: number, text: string) {
+    super(`LLM HTTP ${status}: ${text.slice(0, 300)}`);
+  }
+}
+
+async function geminiAttempt(model: string, key: string, body: unknown, signal: AbortSignal): Promise<string> {
+  for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const data = await postJson(
+      const res = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
-        { "x-goog-api-key": key },
         {
-          systemInstruction: { parts: [{ text: system }] },
-          contents: [{ role: "user", parts: [{ text: user }] }],
-          generationConfig: { responseMimeType: "application/json", temperature: 0 },
+          method: "POST",
+          headers: { "content-type": "application/json", "x-goog-api-key": key },
+          body: JSON.stringify(body),
+          signal,
         },
       );
-      const candidates = data.candidates as { content?: { parts?: { text?: string }[] } }[] | undefined;
-      const text = candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("");
+      if (!res.ok) throw new HttpError(res.status, await res.text());
+      const data = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+      const text = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("");
       if (!text) throw new Error("Gemini returned no text");
       return text;
     } catch (e) {
-      lastErr = lastErr && String(e).includes("budget exhausted") ? lastErr : e;
+      if (signal.aborted) throw e;
+      const retriable = !(e instanceof HttpError) || e.status === 429 || e.status >= 500;
+      if (!retriable || attempt === 2) throw e;
+      await sleep(400 * (attempt + 1));
     }
   }
-  deadline = overall;
-  throw lastErr;
+  throw new Error("unreachable");
+}
+
+async function raceGemini(models: string[], key: string, bodyFor: (model: string) => unknown): Promise<string> {
+  const total = AbortSignal.timeout(BUDGET_MS);
+  const ctrls = models.map(() => new AbortController());
+  return new Promise<string>((resolve, reject) => {
+    const started: boolean[] = models.map(() => false);
+    const errors: unknown[] = [];
+    let finished = false;
+    let hedge: ReturnType<typeof setTimeout> | undefined;
+    const finish = (fn: () => void) => {
+      if (finished) return;
+      finished = true;
+      if (hedge) clearTimeout(hedge);
+      ctrls.forEach((c) => c.abort());
+      fn();
+    };
+    const start = (i: number) => {
+      if (i >= models.length || started[i] || finished) return;
+      started[i] = true;
+      geminiAttempt(models[i], key, bodyFor(models[i]), AbortSignal.any([ctrls[i].signal, total]))
+        .then((text) => finish(() => resolve(text)))
+        .catch((e) => {
+          if (finished) return;
+          errors.push(e);
+          if (total.aborted) return finish(() => reject(new Error("LLM timeout: time budget exhausted")));
+          const next = started.findIndex((s) => !s);
+          if (next >= 0) start(next);
+          else if (errors.length >= models.length) finish(() => reject(errors[0]));
+        });
+    };
+    total.addEventListener("abort", () => finish(() => reject(errors[0] ?? new Error("LLM timeout: time budget exhausted"))));
+    start(0);
+    if (models.length > 1) hedge = setTimeout(() => start(1), HEDGE_MS);
+  });
+}
+
+function geminiModels(): string[] {
+  const primary = requireEnv("GEMINI_MODEL");
+  const fallback = process.env.GEMINI_FALLBACK_MODEL?.trim();
+  return fallback && fallback !== primary ? [primary, fallback] : [primary];
+}
+
+async function callGemini({ system, user }: Req): Promise<string> {
+  return raceGemini(geminiModels(), requireEnv("GEMINI_API_KEY"), (model) => ({
+    systemInstruction: { parts: [{ text: system }] },
+    contents: [{ role: "user", parts: [{ text: user }] }],
+    generationConfig: { responseMimeType: "application/json", temperature: 0, ...thinking(model) },
+  }));
 }
 
 async function callAnthropic({ system, user }: Req): Promise<string> {
@@ -102,7 +161,18 @@ async function callAnthropic({ system, user }: Req): Promise<string> {
   return text;
 }
 
+const CACHE_TTL_MS = 10 * 60 * 1000;
+const CACHE_MAX = 200;
+const cache = new Map<string, { at: number; value: unknown }>();
+
+function cacheKey(req: Req): string {
+  return `${process.env.LLM_PROVIDER ?? "gemini"}|${process.env.GEMINI_MODEL ?? ""}|${req.system}|${req.user}`;
+}
+
 export async function llmJson<T>(schema: z.ZodType<T>, req: Req): Promise<T> {
+  const key = cacheKey(req);
+  const hit = cache.get(key);
+  if (hit && Date.now() - hit.at < CACHE_TTL_MS) return hit.value as T;
   deadline = Date.now() + BUDGET_MS;
   const provider = (process.env.LLM_PROVIDER ?? "gemini").toLowerCase();
   const call = provider === "anthropic" ? callAnthropic : callGemini;
@@ -110,7 +180,10 @@ export async function llmJson<T>(schema: z.ZodType<T>, req: Req): Promise<T> {
   for (let attempt = 0; attempt < 2; attempt++) {
     const raw = await call(req);
     try {
-      return schema.parse(JSON.parse(stripFences(raw)));
+      const value = schema.parse(JSON.parse(stripFences(raw)));
+      if (cache.size >= CACHE_MAX) cache.delete(cache.keys().next().value as string);
+      cache.set(key, { at: Date.now(), value });
+      return value;
     } catch (e) {
       lastErr = e;
     }
