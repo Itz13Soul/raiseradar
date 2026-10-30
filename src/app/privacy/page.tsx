@@ -6,7 +6,7 @@ const ITEMS = [
   "RaiseRadar shows public funding announcements and does not ask visitors for any personal data.",
   "The /admin area is for the site owner only and uses a sign-in session cookie that is not set for ordinary visitors.",
   "Funding data is stored in a Supabase database that visitors can only read.",
-  "Page views are counted with Vercel Web Analytics, which is cookieless and reports aggregate traffic only. No advertising or cross-site tracking is used."
+  "Page views are counted with Vercel Web Analytics, which is cookieless and reports aggregate traffic only. If you accept the analytics banner, Google Analytics 4 also records anonymised visits and which features are used (for example, that a check was run, never what you type) and sets cookies. Nothing loads if you decline, and you can change your choice with Analytics settings in the footer. No advertising is used."
 ];
 
 export default function PrivacyPage() {

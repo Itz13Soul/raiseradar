@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "../lib/track";
 import { useState } from "react";
 import CopyButton from "./CopyButton";
 
@@ -21,8 +22,8 @@ export default function NoteBuilder({ dealId }: { dealId: string }) {
         body: JSON.stringify({ dealId, audience, about }),
       });
       const data = (await res.json()) as { note?: string; error?: string };
-      if (!res.ok || !data.note) setError(data.error ?? "Something went wrong.");
-      else setNote(data.note);
+      if (!res.ok || !data.note) { setError(data.error ?? "Something went wrong."); track("note_error", { audience }); }
+      else { setNote(data.note); track("note_generated", { audience }); }
     } catch {
       setError("Network error. Please try again.");
     } finally {
