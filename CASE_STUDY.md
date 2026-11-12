@@ -20,7 +20,7 @@
 
 **Speed work.** The slow model now races a faster one; a repeat input returns from cache; the server runs in Mumbai next to the database.
 
-**Limits.** 201 reviewed real deals live (4 Aug to 9 Nov 2026), all sourced from StartupTalky daily funding roundups. Single labeller. No live feeds until terms are confirmed.
+**Limits.** 314 reviewed real deals live (28 Jul to 9 Nov 2026): 201 from StartupTalky daily roundups and 113 from Inc42 weekly funding tables, deduplicated by company. Facts only, each linked to its source page. Hiring signals on the Inc42 rows are rule-based guesses from the sector label (low confidence), not extracted from articles. Inc42 terms of use were not verified. Single labeller. No live feeds until terms are confirmed.
 
 **Next.** A second labeller, full-article inputs, and real usage analytics.
 
