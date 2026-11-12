@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Privacy" };
+export const metadata: Metadata = { title: "Privacy", description: "How RaiseRadar handles accounts, resume text, email alerts and analytics.", alternates: { canonical: "/privacy" } };
 
 const ITEMS = [
   "Browsing RaiseRadar needs no account and collects no personal data. Funding announcements are public.",

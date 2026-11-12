@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { supabaseAnon } from "../../lib/supabase";
 import type { DealRow } from "../../lib/schema";
 
 export const revalidate = 600;
+
+export const metadata: Metadata = {
+  title: "Indian startup funding insights: cities, sectors and stages",
+  description: "Where Indian startups are raising money: funding rounds by city, sector and stage, computed from reviewed deals.",
+  alternates: { canonical: "/insights" },
+};
 
 function tally(values: (string | null | undefined)[], top = 8): [string, number][] {
   const m = new Map<string, number>();

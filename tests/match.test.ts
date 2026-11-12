@@ -73,3 +73,19 @@ describe("digest and profile helpers", () => {
     assert.equal(parseList("a,b,c,d", 2).length, 2);
   });
 });
+
+import { groupDeals } from "../src/lib/group";
+import { slugify, jsonLd } from "../src/lib/seo";
+
+describe("seo helpers", () => {
+  const fx = JSON.parse(readFileSync("eval/match-labelled.json", "utf8")) as { deals: Record<string, unknown>[] };
+  const deals = fx.deals.map((d, i) => ({ ...d, id: String(i), created_at: "2026-11-01" })) as never[];
+  it("only builds pages for groups with at least 3 deals", () => {
+    for (const k of ["city", "sector"] as const) for (const g of groupDeals(deals, k)) assert.ok(g.deals.length >= 3);
+    assert.ok(groupDeals(deals, "city").some((g) => g.slug === "bengaluru"));
+  });
+  it("slugifies and escapes json-ld", () => {
+    assert.equal(slugify("Food & Beverage"), "food-and-beverage");
+    assert.ok(!jsonLd({ a: "</script><b>" }).includes("<"));
+  });
+});

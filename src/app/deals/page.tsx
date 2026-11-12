@@ -1,10 +1,17 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import CopyButton from "../../components/CopyButton";
 import { supabaseAnon } from "../../lib/supabase";
 import { firstFounder, founderSearchUrl } from "../../lib/signals";
 import { STAGES, isHttpUrl, type DealRow } from "../../lib/schema";
 
 export const revalidate = 300;
+
+export const metadata: Metadata = {
+  title: "Indian startup funding rounds and hiring signals",
+  description: "Browse reviewed Indian startup funding rounds filtered by city, sector and stage, with the roles each company is likely to hire next and a suggested outreach channel.",
+  alternates: { canonical: "/deals" },
+};
 
 type Params = { city?: string; sector?: string; stage?: string; role?: string };
 

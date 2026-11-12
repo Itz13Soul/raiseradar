@@ -23,6 +23,8 @@ Every Indian funding round, turned into who is likely to hire, and what to say.
 7. **Email digest** (`/api/digest`, daily cron): opt-in daily or weekly email of new deals above your minimum match score, with one-click unsubscribe. Sends nothing unless `RESEND_API_KEY` and `DIGEST_FROM_EMAIL` are set.
 8. **Company page**: funding history for the same company name, similar companies, a careers search link and a save button.
 
+SEO: every page has its own title, description and canonical URL; the home page carries WebSite, WebApplication and FAQPage structured data; deal pages carry breadcrumbs; `/cities/[slug]` and `/sectors/[slug]` pages are generated from the data (only for groups of 3 or more deals, to avoid thin pages); `sitemap.xml` lists every reviewed deal; a social share image is generated at `/opengraph-image`.
+
 Match score is a transparent 0 to 100 heuristic (`src/lib/match.ts`), not a model: weighted role, skills, sector, stage, city, size and recency, with unfilled profile fields ignored rather than penalised.
 
 ## Honesty and compliance

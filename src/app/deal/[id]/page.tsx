@@ -7,6 +7,7 @@ import ShortlistButton from "../../../components/ShortlistButton";
 import { supabaseAnon } from "../../../lib/supabase";
 import { careersSearchUrl, firstFounder, founderSearchUrl } from "../../../lib/signals";
 import { isHttpUrl, type DealRow } from "../../../lib/schema";
+import { SITE_URL, jsonLd, trimTo } from "../../../lib/seo";
 
 export const revalidate = 300;
 
@@ -40,8 +41,23 @@ async function loadRelated(deal: DealRow): Promise<{ history: Lite[]; similar: L
 }
 
 export async function generateMetadata({ params }: PageProps<"/deal/[id]">): Promise<Metadata> {
-  const deal = await load((await params).id);
-  return { title: deal ? `${deal.company} hiring signals | RaiseRadar` : "Deal | RaiseRadar" };
+  const id = (await params).id;
+  const deal = await load(id);
+  if (!deal) return { title: "Deal not found", robots: { index: false } };
+  const roles = (deal.hiring?.roles ?? []).filter((r) => r.confidence !== "low").slice(0, 3).map((r) => r.role);
+  const facts = [deal.amount_raw, deal.stage, deal.city].filter(Boolean).join(", ");
+  const title = `${deal.company} funding and likely hiring roles`;
+  const description = trimTo(
+    `${deal.company} ${facts ? `raised ${facts}` : "announced a funding round"}${deal.announced_date ? ` on ${deal.announced_date}` : ""}.${roles.length ? ` Likely to hire: ${roles.join(", ")}.` : ""} Predictions from stage, sector and use of funds.`,
+    158,
+  );
+  return {
+    title,
+    description,
+    alternates: { canonical: `/deal/${id}` },
+    openGraph: { title, description, url: `${SITE_URL}/deal/${id}`, type: "article" },
+    robots: deal.is_sample ? { index: false, follow: false } : undefined,
+  };
 }
 
 const DOT: Record<string, string> = { high: "bg-emerald-400", medium: "bg-amber-400", low: "bg-zinc-500" };
@@ -54,6 +70,20 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 pb-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "RaiseRadar", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "Deals", item: `${SITE_URL}/deals` },
+              { "@type": "ListItem", position: 3, name: deal.company, item: `${SITE_URL}/deal/${deal.id}` },
+            ],
+          }),
+        }}
+      />
       <Link href="/deals" className="text-sm text-zinc-400 hover:text-zinc-200">
         Back to deals
       </Link>

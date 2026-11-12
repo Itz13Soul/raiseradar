@@ -5,13 +5,13 @@ import ConsentAnalytics, { AnalyticsSettingsButton } from "../components/Consent
 import Link from "next/link";
 import Nav from "../components/Nav";
 import AuthProvider from "../components/AuthProvider";
+import { SITE_URL } from "../lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const display = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const SITE_URL = "https://raiseradar-woad.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   keywords: ["RaiseRadar", "Indian startup funding", "startup hiring signals", "funded startups India", "funding tracker", "Divyansh Srivastava"],
   authors: [{ name: "Divyansh Srivastava" }],
   creator: "Divyansh Srivastava",
-  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
     title: "RaiseRadar: Indian startup funding rounds turned into hiring signals",
@@ -29,7 +28,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "RaiseRadar",
   },
-  twitter: { card: "summary", title: "RaiseRadar", description: "Indian funding rounds turned into hiring signals." },
+  twitter: { card: "summary_large_image", title: "RaiseRadar: Indian startup funding rounds turned into hiring signals", description: "Every Indian funding round, turned into who is likely to hire, and what to say." },
+  verification: process.env.NEXT_PUBLIC_GSC_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } : undefined,
+  category: "business",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -43,6 +44,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </AuthProvider>
         <footer className="mx-auto w-full max-w-6xl px-4 py-8 text-xs text-zinc-400">
           © 2026 Divyansh Srivastava. All rights reserved. Developed by Divyansh Srivastava.{" "}
+          <Link href="/deals" className="underline underline-offset-2 hover:text-zinc-300">Deals</Link>{" · "}
+          <Link href="/insights" className="underline underline-offset-2 hover:text-zinc-300">Insights</Link>{" · "}
           <Link href="/privacy" className="underline underline-offset-2 hover:text-zinc-300">Privacy</Link>{" · "}<AnalyticsSettingsButton />
         </footer>
         <Analytics />
