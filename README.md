@@ -16,7 +16,7 @@ Every Indian funding round, turned into who is likely to hire, and what to say.
 3. **Outreach kit**: three-line note, suggested channel, and a search link for the founder's public profile.
 4. **Filters** by city, sector, stage and role.
 5. **My radar** (optional email sign-in, no password) with separate paths per audience:
-   - *Job seekers*: paste a resume to autofill a profile, then see funded companies ranked by predicted-role, skill, city, sector and stage fit.
+   - *Job seekers*: upload a resume (PDF, DOCX or TXT, up to 4 MB) or paste it to autofill a profile; skills and cities are kept only if they literally appear in the document, and roles are mapped to the role titles used in our deals, then see funded companies ranked by predicted-role, skill, city, sector and stage fit.
    - *Recruiters*: the same ranking plus a "roles in demand" board across your matches.
    - *Sales and agencies*: rank accounts by what their use of funds says they need, with CSV export and a "why now" line.
 6. **Outreach pipeline** (`/my/pipeline`): save any company, move it saved, contacted, replied, meeting, closed or passed, and keep notes. Private per user through row-level security.

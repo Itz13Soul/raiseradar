@@ -7,9 +7,9 @@ import { STAGES } from "../lib/schema";
 import { track } from "../lib/track";
 
 const AUTOFILL_LABEL: Record<Audience, string> = {
-  job_seeker: "Paste your resume text",
-  recruiter: "Paste a job description or candidate profile",
-  sales: "Paste a description of what you sell",
+  job_seeker: "Upload or paste your resume",
+  recruiter: "Upload or paste a job description or candidate profile",
+  sales: "Upload or paste a description of what you sell",
 };
 
 export default function ProfileForm({ initial, onSaved }: { initial: Profile | null; onSaved: (p: Profile) => void }) {
@@ -21,19 +21,20 @@ export default function ProfileForm({ initial, onSaved }: { initial: Profile | n
   const [sectors, setSectors] = useState((initial?.sectors ?? []).join(", "));
   const [stages, setStages] = useState<string[]>(initial?.stages ?? []);
   const [paste, setPaste] = useState("");
+  const [fileName, setFileName] = useState("");
   const [busy, setBusy] = useState<"" | "fill" | "save">("");
   const [msg, setMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
   const copy = AUDIENCE_COPY[audience];
 
-  async function autofill() {
+  async function runAutofill(init: RequestInit) {
     if (!session) return;
     setBusy("fill");
     setMsg(null);
     try {
       const res = await fetch("/api/resume", {
         method: "POST",
-        headers: { "content-type": "application/json", authorization: `Bearer ${session.access_token}` },
-        body: JSON.stringify({ audience, text: paste }),
+        ...init,
+        headers: { ...(init.headers as Record<string, string>), authorization: `Bearer ${session.access_token}` },
       });
       const j = await res.json();
       if (!res.ok) throw new Error(j.error ?? "Could not read that text.");
@@ -43,13 +44,36 @@ export default function ProfileForm({ initial, onSaved }: { initial: Profile | n
       setCities((c) => merge(c, j.cities ?? [], 10));
       setSectors((c) => merge(c, j.sectors ?? [], 10));
       setPaste("");
-      setMsg({ kind: "ok", text: "Fields filled. Review and edit them, then save. The pasted text was not stored." });
+      const n = (j.roles?.length ?? 0) + (j.skills?.length ?? 0) + (j.cities?.length ?? 0) + (j.sectors?.length ?? 0);
+      setMsg({
+        kind: n > 0 ? "ok" : "err",
+        text: n > 0 ? "Fields filled from your document. Review and edit them, then save. The file and text were not stored." : "Nothing usable was found. Fill the fields by hand.",
+      });
       track("profile_autofill", { audience });
     } catch (e) {
       setMsg({ kind: "err", text: e instanceof Error ? e.message : "Could not read that text." });
     } finally {
       setBusy("");
     }
+  }
+
+  function autofill() {
+    return runAutofill({ headers: { "content-type": "application/json" }, body: JSON.stringify({ audience, text: paste }) });
+  }
+
+  async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > 4 * 1024 * 1024) {
+      setMsg({ kind: "err", text: "The file is larger than 4 MB. Upload a smaller file or paste the text." });
+      return;
+    }
+    setFileName(file.name);
+    const body = new FormData();
+    body.append("audience", audience);
+    body.append("file", file);
+    await runAutofill({ body });
   }
 
   async function save(e: React.FormEvent) {
@@ -100,7 +124,14 @@ export default function ProfileForm({ initial, onSaved }: { initial: Profile | n
         <label htmlFor="paste" className="text-sm font-medium">
           {AUTOFILL_LABEL[audience]} <span className="font-normal text-zinc-500">(optional, fills the fields below)</span>
         </label>
-        <textarea id="paste" value={paste} onChange={(e) => setPaste(e.target.value)} rows={4} maxLength={8000} className={`${field} mt-2`} placeholder="Text is sent to the AI model to extract fields, then discarded. Do not paste anything confidential." />
+        <div className="mt-2 flex flex-wrap items-center gap-3">
+          <label className={`cursor-pointer rounded-full bg-white/10 px-4 py-1.5 text-sm hover:bg-white/15 ${busy !== "" ? "pointer-events-none opacity-50" : ""}`}>
+            {busy === "fill" ? "Reading…" : "Upload PDF, DOCX or TXT"}
+            <input type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onChange={onFile} disabled={busy !== ""} className="sr-only" />
+          </label>
+          <span className="text-xs text-zinc-500">{fileName ? `Last file: ${fileName}. ` : ""}Up to 4 MB. Text-based files only, not scans.</span>
+        </div>
+        <textarea id="paste" value={paste} onChange={(e) => setPaste(e.target.value)} rows={4} maxLength={8000} className={`${field} mt-3`} placeholder="Or paste the text here. Files and text are sent to the AI model to extract fields, then discarded. Do not use anything confidential." />
         <button
           type="button"
           onClick={autofill}
