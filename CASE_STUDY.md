@@ -4,7 +4,7 @@
 
 **Existing tools.** Entrackr weekly funding reports and Inc42 Datalabs report the deal and stop.
 
-**What I built.** A daily pipeline that reads funding feeds, extracts each round into a fixed validated schema (company, amount, stage, investors, sector, city, date, use of funds), then adds up to five predicted roles with a stated reason and a low/medium/high confidence, a suggested channel and a three-line outreach note. Filters by city, sector, stage and role, plus a weekly brief whose counts are computed in code.
+**What I built.** A daily pipeline that reads funding feeds, extracts each round into a fixed validated schema (company, amount, stage, investors, sector, city, date, use of funds), then adds up to five predicted roles with a stated reason and a low/medium/high confidence, a suggested channel and a three-line outreach note. Filters by city, sector, stage and role.
 
 **Round two: end to end.** Added optional email sign-in and three audience paths. Job seekers paste a resume and get ranked companies; recruiters get a roles-in-demand board; sales users get account ranking with CSV export. All users can save companies into an outreach pipeline with status and notes, and opt into an email digest of new matches. Existing alternatives (Entrackr, Inc42 Datalabs, LinkedIn job alerts) report the deal or the posted job, not who has just funded a need that fits you.
 

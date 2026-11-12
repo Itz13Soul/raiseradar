@@ -188,7 +188,7 @@ export default function MyRadar() {
         </ul>
       )}
       <p className="mt-6 text-xs text-zinc-500">
-        Match score is a transparent 0 to 100 heuristic over role, skills, sector, stage, city and recency, not a prediction of hiring. Predicted roles are probability, not proof. See <Link href="/method" className="underline">Method</Link>.
+        Match score is a transparent 0 to 100 heuristic over role, skills, sector, stage, city and recency, not a prediction of hiring. Predicted roles are probability, not proof.
       </p>
     </div>
   );

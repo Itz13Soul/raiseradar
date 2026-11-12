@@ -14,7 +14,7 @@ Every Indian funding round, turned into who is likely to hire, and what to say.
 1. **Ingest** (`/api/ingest`, daily Vercel Cron): reads the RSS/Atom feeds you list in `FEED_URLS`, extracts company, amount, stage, investors, sector, city, date and use of funds with an LLM against a fixed, validated schema.
 2. **Hiring signals**: from stage, sector and stated use of funds, predicts up to five roles. Each carries a reason and a low/medium/high confidence.
 3. **Outreach kit**: three-line note, suggested channel, and a search link for the founder's public profile.
-4. **Filters** by city, sector, stage and role; a **weekly brief** (`/brief`) whose counts are computed in code, with the LLM only phrasing them.
+4. **Filters** by city, sector, stage and role.
 5. **My radar** (optional email sign-in, no password) with separate paths per audience:
    - *Job seekers*: paste a resume to autofill a profile, then see funded companies ranked by predicted-role, skill, city, sector and stage fit.
    - *Recruiters*: the same ranking plus a "roles in demand" board across your matches.
@@ -72,7 +72,7 @@ Target (from the master plan): extraction accuracy above 95% on 50 hand-labelled
 | All fields correct, strict | 54% (27/50) |
 | All fields correct, "Other" = not stated | 100% (50/50) |
 
-The strict stage miss is a labelling convention, not a wrong stage: when a report does not state the round, I labelled it null while the model returns the schema value "Other". Both numbers are shown so the choice is visible. Treat the 100% as an upper bound: small, easy, same-author labels. Per-item results are in `eval/results.json`; source links point to the Entrackr weekly reports. The live `/method` page also shows a running figure from reviewed deals.
+The strict stage miss is a labelling convention, not a wrong stage: when a report does not state the round, I labelled it null while the model returns the schema value "Other". Both numbers are shown so the choice is visible. Treat the 100% as an upper bound: small, easy, same-author labels. Per-item results are in `eval/results.json`; source links point to the Entrackr weekly reports.
 
 To reproduce:
 
@@ -121,7 +121,7 @@ The source is published for viewing and evaluation only; see `LICENSE`. Not lega
 
 - `/admin` (password from `ADMIN_PASSWORD`, at least 16 characters): paste a public report, extract facts, correct them, publish with hiring signals. Only facts and the source link are stored.
 - `/deal/[id]`: full outreach kit and a personalised note generator (daily cap `NOTE_DAILY_CAP`).
-- `/insights`, `/method` (accuracy measured from reviewed deals against the model's first extraction), `/api/export` (CSV).
+- `/insights`, `/api/export` (CSV).
 
 Hiring signals are predictions, not confirmed openings. Probability, not proof. Not legal or financial advice.
 

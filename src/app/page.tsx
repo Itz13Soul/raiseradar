@@ -68,8 +68,7 @@ export default async function Landing() {
           A model reads each public funding announcement and a person checks every field. From the stage, sector and stated use of funds it predicts likely roles, each with a reason and a confidence, and drafts a short note to send. Predictions are not confirmed openings.
         </p>
         <p className="mt-4 text-sm text-zinc-400">
-          Extraction was tested on 50 items: company, amount, city and date were all correct. Stage matched 54% strictly and 100% when &quot;Other&quot; counts as not stated. The labels are mine, so read it as an upper bound.{" "}
-          <Link href="/method" className="text-cyan-200 underline-offset-4 hover:underline">Method</Link>
+          Extraction was tested on 50 items: company, amount, city and date were all correct. Stage matched 54% strictly and 100% when &quot;Other&quot; counts as not stated. The labels are mine, so read it as an upper bound.
         </p>
       </section>
     </main>
