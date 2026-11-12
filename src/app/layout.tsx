@@ -10,13 +10,25 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const display = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
+const SITE_URL = "https://raiseradar-woad.vercel.app";
+
 export const metadata: Metadata = {
-  title: "RaiseRadar",
-  description: "Indian funding rounds turned into hiring signals: likely roles, who to reach, and what to say.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "RaiseRadar: Indian startup funding rounds turned into hiring signals", template: "%s | RaiseRadar" },
+  description: "RaiseRadar tracks Indian startup funding rounds and predicts which roles each company will hire for next, with a suggested channel and a three-line outreach note.",
+  keywords: ["RaiseRadar", "Indian startup funding", "startup hiring signals", "funded startups India", "funding tracker", "Divyansh Srivastava"],
   authors: [{ name: "Divyansh Srivastava" }],
   creator: "Divyansh Srivastava",
-  openGraph: { title: "RaiseRadar", type: "website", siteName: "RaiseRadar" },
-  twitter: { card: "summary", title: "RaiseRadar" },
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "RaiseRadar: Indian startup funding rounds turned into hiring signals",
+    description: "Every Indian funding round, turned into who is likely to hire, and what to say.",
+    url: SITE_URL,
+    type: "website",
+    siteName: "RaiseRadar",
+  },
+  twitter: { card: "summary", title: "RaiseRadar", description: "Indian funding rounds turned into hiring signals." },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
