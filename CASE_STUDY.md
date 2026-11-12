@@ -20,7 +20,7 @@
 
 **Speed work.** The slow model now races a faster one; a repeat input returns from cache; the server runs in Mumbai next to the database.
 
-**Limits.** 65 reviewed real deals live (13 Oct to 9 Nov 2026), all sourced from StartupTalky daily funding roundups. Single labeller. No live feeds until terms are confirmed.
+**Limits.** 201 reviewed real deals live (4 Aug to 9 Nov 2026), all sourced from StartupTalky daily funding roundups. Single labeller. No live feeds until terms are confirmed.
 
 **Next.** A second labeller, full-article inputs, and real usage analytics.
 

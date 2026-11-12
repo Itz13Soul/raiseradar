@@ -2,7 +2,7 @@
 
 Every Indian funding round, turned into who is likely to hire, and what to say.
 
-**Status: live at https://raiseradar-woad.vercel.app with 65 reviewed real deals (13 Oct to 9 Nov 2026). A 50-item extraction evaluation is reported below.**
+**Status: live at https://raiseradar-woad.vercel.app with 201 reviewed real deals (4 Aug to 9 Nov 2026). A 50-item extraction evaluation is reported below.**
 
 ## Wedge
 
