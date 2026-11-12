@@ -1,0 +1,1284 @@
+{
+ "_note": "Deals are a 38-company subset of the real reviewed RaiseRadar dataset (Oct-Nov 2026). Relevance labels were drafted by Claude from each profile's plain-language description and the deal text, independently of the scoring code. The owner should review and correct them; the score is only as good as the labels.",
+ "as_of": "2026-11-12",
+ "deals": [
+  {
+   "company": "Karta AI",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": "voice AI agents",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-22",
+   "use_of_funds": "Improving automation and language support, and growing its engineering and sales teams.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Sales Executive",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "NLP / Language Engineer",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Live2.ai",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "AI",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-27",
+   "use_of_funds": "Agentic intelligence layer, enterprise and global sales, and regional cloud infrastructure in North America, Europe and Asia Pacific.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Enterprise Sales Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "AI/ML Engineer (Agentic Systems)",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Cloud Infrastructure Engineer",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Matiks",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Series A",
+   "sector": "social gaming",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-26",
+   "use_of_funds": "International expansion starting with the US, new games and social experiences, and an AI tool for building games without coding.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Game Developer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager (International Markets)",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "PowerUp Money",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "wealthtech",
+   "city": "Bengaluru",
+   "announced_date": "2026-11-03",
+   "use_of_funds": "Building AI-led wealth tools and expanding advisory services.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Wealth Advisor",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Venomics AI",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Seed",
+   "sector": "biotech",
+   "city": "Bengaluru",
+   "announced_date": "2026-11-05",
+   "use_of_funds": "Growing its data, AI tools and lab testing.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Data Scientist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Lab Research Associate",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "O-Health",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "healthtech",
+   "city": "Bengaluru",
+   "announced_date": "2026-11-09",
+   "use_of_funds": "Developing its AI models and clinical hardware.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Hardware Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Clinical Research Associate",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Simplismart",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series B",
+   "sector": "AI infrastructure",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-28",
+   "use_of_funds": "Expanding in the US and other markets, growing the team, and building out its platform.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Platform Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "US Sales / Go-to-Market Lead",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "ML Infrastructure Engineer",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Dispatch Network",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Seed",
+   "sector": "logistics",
+   "city": "Pune",
+   "announced_date": "2026-11-02",
+   "use_of_funds": "Growing the AI team behind its logistics model.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Data Scientist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Backend Engineer",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Onto",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Seed",
+   "sector": "travel tech",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-21",
+   "use_of_funds": "Growing operations, strengthening technology and building new products.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Software Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Operations Associate",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Mochatrade",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": null,
+   "city": null,
+   "announced_date": "2026-10-27",
+   "use_of_funds": "For the trading engine, risk systems, and reaching more Indian traders.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Backend Engineer",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Growth Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "DevOps Engineer",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "BioStack",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": "Healthcare data infrastructure",
+   "city": null,
+   "announced_date": "2026-10-26",
+   "use_of_funds": "International expansion, technology development, and growing engineering and research teams.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Software Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Research Scientist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "dubdub",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": "Consumer apps",
+   "city": null,
+   "announced_date": "2026-10-27",
+   "use_of_funds": "hiring in product and engineering, new interactive formats, and feed personalisation",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Senior Software Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Machine Learning Engineer",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Bucketlistt.com",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": "travel tech",
+   "city": "Ahmedabad",
+   "announced_date": "2026-10-26",
+   "use_of_funds": "Technology and product, onboarding operators, expanding to Manali and Bir, and content and distribution partnerships.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Full Stack Developer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Operations Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Solgram",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Seed",
+   "sector": "premium grocery",
+   "city": "Gurugram",
+   "announced_date": "2026-11-03",
+   "use_of_funds": "Expanding cold storage, upgrading technology and growing across Delhi NCR.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Software Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Cold Chain Operations Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "City Sales Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Maasi",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Seed",
+   "sector": "childcare",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-27",
+   "use_of_funds": "Recruiting and training caregivers, technology and team expansion in Bengaluru.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Operations Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Full Stack Developer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Ace Blend",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series A",
+   "sector": "nutrition",
+   "city": null,
+   "announced_date": "2026-10-29",
+   "use_of_funds": "Research-led product development and new nutrition formats.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Research Scientist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Brand Manager",
+      "reason": "",
+      "confidence": "low"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Cent",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series A",
+   "sector": "Preventive healthcare",
+   "city": null,
+   "announced_date": "2026-10-27",
+   "use_of_funds": "Funds are for hardware, AI and clinical research.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Hardware Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Firstwork",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series A",
+   "sector": "HR tech",
+   "city": "San Francisco",
+   "announced_date": "2026-10-23",
+   "use_of_funds": "Growing AI, engineering and sales teams, and expanding in the US and Europe.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Software Engineer (AI/ML)",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Account Executive",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "RapidCanvas",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series B",
+   "sector": "Enterprise AI",
+   "city": null,
+   "announced_date": "2026-10-16",
+   "use_of_funds": "Growing sales teams, building partnerships, and hiring AI engineers in India, the US and Brazil.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Sales Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Partnerships Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Konwert India Motors",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Series A",
+   "sector": "electric vehicles",
+   "city": "Coimbatore",
+   "announced_date": "2026-10-23",
+   "use_of_funds": "Growing sales, adding products, and entering new markets in India and abroad.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Sales Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "International Business Development Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "AugurAI",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "industrial AI",
+   "city": "Tiruchirappalli",
+   "announced_date": "2026-10-30",
+   "use_of_funds": "Product development, research, and growing sales.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Research Scientist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Sales Executive",
+      "reason": "",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "company": "OneStack",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "fintech",
+   "city": "Mumbai",
+   "announced_date": "2026-11-04",
+   "use_of_funds": "Reaching more cooperative banks and NBFCs, and building new payment and compliance products.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Compliance Specialist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Product Engineer",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Enterprise Sales Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Troovy",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series B",
+   "sector": "snacks and food",
+   "city": "Gurugram",
+   "announced_date": "2026-10-27",
+   "use_of_funds": "R&D, manufacturing capacity, and distribution through quick commerce and offline channels.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Supply Chain Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Food Technologist",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Regional Sales Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Boldfit",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series B",
+   "sector": "fitness and sportswear",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-13",
+   "use_of_funds": "Expanding store network, developing new products, strengthening manufacturing, and pursuing acquisitions.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Retail Operations Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Supply Chain Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Regional Sales Manager",
+      "reason": "",
+      "confidence": "low"
+     }
+    ]
+   }
+  },
+  {
+   "company": "ECOPATH",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": "construction materials",
+   "city": "Bengaluru",
+   "announced_date": "2026-11-04",
+   "use_of_funds": "Factory production, supply chains, hiring, and research.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Plant Operations Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Supply Chain Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Materials Research Scientist",
+      "reason": "",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Rotoris",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series A",
+   "sector": "luxury watch",
+   "city": "Gurugram",
+   "announced_date": "2026-10-27",
+   "use_of_funds": "Research, higher production, and store growth in India and overseas.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Production Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Retail Operations Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Supply Chain Lead",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Unify Foodworks",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Seed",
+   "sector": "food service",
+   "city": null,
+   "announced_date": "2026-11-03",
+   "use_of_funds": "Opening more Moe's Casa Mexicana and Carvel outlets across Delhi NCR, plus supply chain, logistics and staff training.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Supply Chain Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Training Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Outlet Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "The Croffle Guys",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "food and beverage",
+   "city": "Mumbai",
+   "announced_date": "2026-11-03",
+   "use_of_funds": "Opening over 40 new outlets, mainly in Mumbai and Delhi.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Outlet Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Regional Operations Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Expansion Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Clinics On Cloud",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series A",
+   "sector": "healthtech",
+   "city": "Pune",
+   "announced_date": "2026-11-02",
+   "use_of_funds": "Expansion into the UAE, then Africa, the US and Southeast Asia; AI tools, research and more manufacturing capacity.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "International Business Development Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Manufacturing Operations Manager",
+      "reason": "",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Jagruti Rehabilitation Centre",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series A",
+   "sector": "healthcare",
+   "city": "Pune",
+   "announced_date": "2026-10-29",
+   "use_of_funds": "Expansion into new regions, hiring clinical staff, specialised care programmes, and stronger insurance and corporate partnerships.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Clinical Staff Recruiter",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Clinical Programme Lead",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Even Healthcare",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Series B",
+   "sector": "managed healthcare",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-19",
+   "use_of_funds": "Expanding its hospital network in Bengaluru, with one more hospital by the end of 2026 and three more by the end of FY27.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Hospital Operations Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Physician / Clinical Lead",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "CureBay",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "healthtech",
+   "city": null,
+   "announced_date": "2026-10-22",
+   "use_of_funds": "Expanding into new states, including Andhra Pradesh, and improving its AI health screening.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "State Operations Head",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Hyeglo Beauty",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "beauty and personal care",
+   "city": "Delhi",
+   "announced_date": "2026-11-02",
+   "use_of_funds": "Research, new products, brand building and hiring.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Brand Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "R&D Specialist",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "HR Associate",
+      "reason": "",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "company": "GIVA",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "jewellery",
+   "city": "Bengaluru",
+   "announced_date": "2026-11-03",
+   "use_of_funds": "Opening more stores, strengthening manufacturing and growing the leadership team.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Manufacturing Operations Manager",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Retail Expansion Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Leadership Hiring Recruiter",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "TravClan",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "travel tech",
+   "city": "Delhi",
+   "announced_date": "2026-10-22",
+   "use_of_funds": "Growing its team, expanding global supply, and adding more destinations.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Destination Supply Manager",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Talent Acquisition Partner",
+      "reason": "",
+      "confidence": "medium"
+     },
+     {
+      "role": "Software Engineer",
+      "reason": "",
+      "confidence": "low"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Tensrai",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Seed",
+   "sector": "robotics",
+   "city": "Hyderabad",
+   "announced_date": "2026-10-29",
+   "use_of_funds": "Building technology and team, and expanding in India and abroad.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Robotics Software Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Business Development Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Venttup",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Pre-Series A",
+   "sector": "precision manufacturing",
+   "city": null,
+   "announced_date": "2026-10-29",
+   "use_of_funds": "Growing the engineering team, precision manufacturing, and AI for sourcing.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Manufacturing Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "AI/ML Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Sourcing Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  },
+  {
+   "company": "Paar Autonomy",
+   "amount_value": null,
+   "currency": null,
+   "stage": "Other",
+   "sector": "defence tech",
+   "city": "Bengaluru",
+   "announced_date": "2026-10-26",
+   "use_of_funds": "Scaling production of AI-powered camera systems and building GPS-free drone navigation.",
+   "hiring": {
+    "roles": [
+     {
+      "role": "Embedded Systems Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Computer Vision Engineer",
+      "reason": "",
+      "confidence": "high"
+     },
+     {
+      "role": "Manufacturing/Operations Manager",
+      "reason": "",
+      "confidence": "medium"
+     }
+    ]
+   }
+  }
+ ],
+ "profiles": [
+  {
+   "id": "js-ml-blr",
+   "description": "Job seeker: AI/ML engineer in Bengaluru",
+   "profile": {
+    "audience": "job_seeker",
+    "roles": [
+     "AI/ML engineer"
+    ],
+    "skills": [],
+    "cities": [
+     "Bengaluru"
+    ],
+    "sectors": [],
+    "stages": []
+   },
+   "relevant": [
+    "Karta AI",
+    "Live2.ai",
+    "Matiks",
+    "PowerUp Money",
+    "Venomics AI",
+    "O-Health"
+   ]
+  },
+  {
+   "id": "js-pm",
+   "description": "Job seeker: product manager, any city",
+   "profile": {
+    "audience": "job_seeker",
+    "roles": [
+     "Product Manager"
+    ],
+    "skills": [],
+    "cities": [],
+    "sectors": [],
+    "stages": []
+   },
+   "relevant": [
+    "Matiks",
+    "PowerUp Money",
+    "Onto",
+    "BioStack",
+    "dubdub",
+    "Bucketlistt.com",
+    "Maasi",
+    "Ace Blend",
+    "Cent",
+    "Firstwork"
+   ]
+  },
+  {
+   "id": "js-be",
+   "description": "Job seeker: backend or software engineer, Bengaluru or Pune",
+   "profile": {
+    "audience": "job_seeker",
+    "roles": [
+     "Backend engineer",
+     "Software engineer"
+    ],
+    "skills": [],
+    "cities": [
+     "Bengaluru",
+     "Pune"
+    ],
+    "sectors": [],
+    "stages": []
+   },
+   "relevant": [
+    "Dispatch Network",
+    "Onto",
+    "Mochatrade",
+    "BioStack",
+    "dubdub"
+   ]
+  },
+  {
+   "id": "js-sc",
+   "description": "Job seeker: supply chain manager",
+   "profile": {
+    "audience": "job_seeker",
+    "roles": [
+     "Supply chain manager"
+    ],
+    "skills": [],
+    "cities": [],
+    "sectors": [],
+    "stages": []
+   },
+   "relevant": [
+    "Troovy",
+    "Boldfit",
+    "ECOPATH",
+    "Rotoris",
+    "Unify Foodworks"
+   ]
+  },
+  {
+   "id": "rc-sales",
+   "description": "Recruiter: sales managers and account executives",
+   "profile": {
+    "audience": "recruiter",
+    "roles": [
+     "Sales manager",
+     "Account executive"
+    ],
+    "skills": [],
+    "cities": [],
+    "sectors": [],
+    "stages": []
+   },
+   "relevant": [
+    "Firstwork",
+    "RapidCanvas",
+    "Konwert India Motors",
+    "Live2.ai",
+    "Karta AI",
+    "AugurAI",
+    "OneStack",
+    "Troovy"
+   ]
+  },
+  {
+   "id": "rc-ai-early",
+   "description": "Recruiter: AI/ML engineers at Seed to Series A",
+   "profile": {
+    "audience": "recruiter",
+    "roles": [
+     "AI/ML engineer"
+    ],
+    "skills": [],
+    "cities": [],
+    "sectors": [],
+    "stages": [
+     "Seed",
+     "Series A",
+     "Pre-Seed"
+    ]
+   },
+   "relevant": [
+    "Karta AI",
+    "Dispatch Network",
+    "Venomics AI",
+    "Cent",
+    "Clinics On Cloud",
+    "Firstwork"
+   ]
+  },
+  {
+   "id": "sl-hiring",
+   "description": "Sales: sells recruitment, targets companies that say they are hiring",
+   "profile": {
+    "audience": "sales",
+    "roles": [],
+    "skills": [
+     "hiring",
+     "recruiting",
+     "staff training"
+    ],
+    "cities": [],
+    "sectors": [],
+    "stages": []
+   },
+   "relevant": [
+    "Jagruti Rehabilitation Centre",
+    "Maasi",
+    "dubdub",
+    "Unify Foodworks",
+    "Hyeglo Beauty",
+    "ECOPATH",
+    "GIVA",
+    "RapidCanvas",
+    "BioStack",
+    "Firstwork",
+    "Karta AI"
+   ]
+  },
+  {
+   "id": "sl-health",
+   "description": "Sales: healthtech accounts at Series A or B",
+   "profile": {
+    "audience": "sales",
+    "roles": [],
+    "skills": [],
+    "cities": [],
+    "sectors": [
+     "healthtech"
+    ],
+    "stages": [
+     "Series A",
+     "Series B"
+    ]
+   },
+   "relevant": [
+    "Clinics On Cloud",
+    "Jagruti Rehabilitation Centre",
+    "Even Healthcare",
+    "Cent"
+   ]
+  }
+ ]
+}

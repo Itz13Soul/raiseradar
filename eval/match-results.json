@@ -1,0 +1,73 @@
+{
+  "ran_on": "2026-11-12",
+  "profiles": 8,
+  "deals": 38,
+  "match": {
+    "rPrecision": 0.781534090909091,
+    "map": 0.8672799614941158,
+    "recallAt10": 0.903125
+  },
+  "baseline_recency": {
+    "rPrecision": 0.17054924242424244,
+    "map": 0.24314916321112962,
+    "recallAt10": 0.24479166666666669
+  },
+  "per_profile": [
+    {
+      "id": "js-ml-blr",
+      "relevant": 6,
+      "rPrecision": 1,
+      "averagePrecision": 1,
+      "recallAt10": 1
+    },
+    {
+      "id": "js-pm",
+      "relevant": 10,
+      "rPrecision": 1,
+      "averagePrecision": 1,
+      "recallAt10": 1
+    },
+    {
+      "id": "js-be",
+      "relevant": 5,
+      "rPrecision": 0.6,
+      "averagePrecision": 0.712156862745098,
+      "recallAt10": 0.8
+    },
+    {
+      "id": "js-sc",
+      "relevant": 5,
+      "rPrecision": 0.8,
+      "averagePrecision": 0.9666666666666666,
+      "recallAt10": 1
+    },
+    {
+      "id": "rc-sales",
+      "relevant": 8,
+      "rPrecision": 0.875,
+      "averagePrecision": 0.8921130952380951,
+      "recallAt10": 0.875
+    },
+    {
+      "id": "rc-ai-early",
+      "relevant": 6,
+      "rPrecision": 1,
+      "averagePrecision": 1,
+      "recallAt10": 1
+    },
+    {
+      "id": "sl-hiring",
+      "relevant": 11,
+      "rPrecision": 0.7272727272727273,
+      "averagePrecision": 0.8332371332371333,
+      "recallAt10": 0.8
+    },
+    {
+      "id": "sl-health",
+      "relevant": 4,
+      "rPrecision": 0.25,
+      "averagePrecision": 0.5340659340659341,
+      "recallAt10": 0.75
+    }
+  ]
+}

@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "./AuthProvider";
 
 const LINKS = [
   { href: "/deals", label: "Deals" },
   { href: "/insights", label: "Insights" },
   { href: "/brief", label: "Weekly brief" },
   { href: "/method", label: "Method" },
+  { href: "/my", label: "My radar" },
 ];
 
 export default function Nav() {
   const path = usePathname();
+  const { user, signOut, configured } = useAuth();
   return (
     <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-[#050912]/70 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-2 px-4 py-3">
@@ -35,6 +38,20 @@ export default function Nav() {
               </Link>
             );
           })}
+          {configured &&
+            (user ? (
+              <button
+                type="button"
+                onClick={() => signOut()}
+                className="rounded-full px-3 py-1.5 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+              >
+                Sign out
+              </button>
+            ) : (
+              <Link href="/login" className="rounded-full bg-cyan-300 px-3 py-1.5 font-medium text-black hover:bg-cyan-200">
+                Sign in
+              </Link>
+            ))}
         </nav>
       </div>
     </header>

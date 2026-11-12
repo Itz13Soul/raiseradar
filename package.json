@@ -11,7 +11,8 @@
     "secret-scan": "bash scripts/secret-scan.sh",
     "typecheck": "tsc --noEmit",
     "prepare": "git config core.hooksPath .githooks || true",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "eval:match": "tsx eval/match.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.2",

@@ -87,3 +87,7 @@ export function founderSearchUrl(company: string, founder?: string | null): stri
   const q = lead ? `${lead} ${company} LinkedIn` : `${company} founder LinkedIn`;
   return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
 }
+
+export function careersSearchUrl(company: string): string {
+  return `https://www.google.com/search?q=${encodeURIComponent(`${company} careers jobs`)}`;
+}

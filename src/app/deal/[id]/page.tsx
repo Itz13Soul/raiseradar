@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import CopyButton from "../../../components/CopyButton";
 import NoteBuilder from "../../../components/NoteBuilder";
+import ShortlistButton from "../../../components/ShortlistButton";
 import { supabaseAnon } from "../../../lib/supabase";
-import { firstFounder, founderSearchUrl } from "../../../lib/signals";
+import { careersSearchUrl, firstFounder, founderSearchUrl } from "../../../lib/signals";
 import { isHttpUrl, type DealRow } from "../../../lib/schema";
 
 export const revalidate = 300;
@@ -18,6 +19,26 @@ async function load(id: string): Promise<DealRow | null> {
   return (data as DealRow | null) ?? null;
 }
 
+const SIMILAR_COLS = "id,company,amount_raw,stage,sector,city,announced_date";
+type Lite = Pick<DealRow, "id" | "company" | "amount_raw" | "stage" | "sector" | "city" | "announced_date">;
+
+async function loadRelated(deal: DealRow): Promise<{ history: Lite[]; similar: Lite[] }> {
+  const db = supabaseAnon();
+  if (!db) return { history: [], similar: [] };
+  const name = deal.company.replace(/[%_,()]/g, "").trim();
+  const [h, s] = await Promise.all([
+    name ? db.from("deals").select(SIMILAR_COLS).ilike("company", name).neq("id", deal.id).order("announced_date", { ascending: false }).limit(10) : Promise.resolve({ data: [] }),
+    deal.sector
+      ? db.from("deals").select(SIMILAR_COLS).ilike("sector", `%${deal.sector.replace(/[%_,()]/g, "").trim()}%`).neq("id", deal.id).order("announced_date", { ascending: false }).limit(12)
+      : Promise.resolve({ data: [] }),
+  ]);
+  const history = (h.data ?? []) as Lite[];
+  const pool = (s.data ?? []) as Lite[];
+  // Same stage first, then the rest; at most four.
+  const similar = [...pool.filter((d) => d.stage === deal.stage), ...pool.filter((d) => d.stage !== deal.stage)].slice(0, 4);
+  return { history, similar };
+}
+
 export async function generateMetadata({ params }: PageProps<"/deal/[id]">): Promise<Metadata> {
   const deal = await load((await params).id);
   return { title: deal ? `${deal.company} hiring signals | RaiseRadar` : "Deal | RaiseRadar" };
@@ -29,6 +50,7 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
   const deal = await load((await params).id);
   if (!deal) notFound();
   const h = deal.hiring;
+  const { history, similar } = await loadRelated(deal);
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 pb-10">
@@ -41,6 +63,12 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
       </p>
       {deal.investors.length > 0 && <p className="mt-1 text-sm text-zinc-400">Investors: {deal.investors.join(", ")}</p>}
       {deal.use_of_funds && <p className="mt-3 text-zinc-300">Stated use of funds: {deal.use_of_funds}</p>}
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <ShortlistButton dealId={deal.id} />
+        <a className="rounded-full border border-white/15 px-4 py-1.5 text-sm hover:bg-white/5" href={careersSearchUrl(deal.company)} target="_blank" rel="noopener noreferrer">
+          Search careers page
+        </a>
+      </div>
       {deal.is_sample && <p className="mt-3 rounded-lg bg-violet-400/10 p-3 text-sm text-violet-200">Sample data for demonstration. Not a real deal.</p>}
 
       {h && (
@@ -86,6 +114,40 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
       <div className="mt-6">
         <NoteBuilder dealId={deal.id} />
       </div>
+
+      {history.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-lg font-semibold">Funding history</h2>
+          <p className="mt-1 text-xs text-zinc-500">Other rounds for the same company name in our dataset. Not a complete cap table.</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {[deal as Lite, ...history]
+              .sort((a, b) => (b.announced_date ?? "").localeCompare(a.announced_date ?? ""))
+              .map((r) => (
+                <li key={r.id} className="flex flex-wrap gap-x-3 text-zinc-300">
+                  <span className="w-24 text-zinc-500">{r.announced_date ?? "Date n/a"}</span>
+                  {r.id === deal.id ? <span className="font-medium">{[r.stage, r.amount_raw].filter(Boolean).join(" · ")} (this round)</span> : <Link className="hover:text-cyan-200" href={`/deal/${r.id}`}>{[r.stage, r.amount_raw].filter(Boolean).join(" · ") || r.company}</Link>}
+                </li>
+              ))}
+          </ul>
+        </section>
+      )}
+
+      {similar.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-lg font-semibold">Similar companies</h2>
+          <p className="mt-1 text-xs text-zinc-500">Same sector in our dataset, same stage first.</p>
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            {similar.map((r) => (
+              <li key={r.id}>
+                <Link href={`/deal/${r.id}`} className="block rounded-xl border border-white/10 p-3 text-sm hover:bg-white/5">
+                  <span className="font-medium">{r.company}</span>
+                  <span className="block text-zinc-400">{[r.amount_raw, r.stage, r.city].filter(Boolean).join(" · ")}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <p className="mt-6 text-xs text-zinc-500">
         Source:{" "}

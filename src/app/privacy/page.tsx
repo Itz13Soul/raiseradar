@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = { title: "Privacy" };
 
 const ITEMS = [
-  "RaiseRadar shows public funding announcements and does not ask visitors for any personal data.",
+  "Browsing RaiseRadar needs no account and collects no personal data. Funding announcements are public.",
+  "If you create an account, we store your email address (for the sign-in link), the profile you enter (audience, roles, skills, cities, sectors, stages), your saved companies with their status and notes, and your alert settings. This is protected by row-level security so only you can read or change it. Your skills and roles are never shared or sold.",
+  "The 'fill fields from text' feature sends the text you paste to an AI model (Google Gemini or Anthropic Claude, depending on configuration) to extract fields. The text is not stored or logged by RaiseRadar. Do not paste confidential material.",
+  "Email alerts are sent only if you switch them on, through Resend. Every email has a one-click unsubscribe link, and you can switch alerts off or delete your account (which erases all of the above) in My radar > Alerts and account. The sign-in session is kept in your browser's local storage.",
   "The /admin area is for the site owner only and uses a sign-in session cookie that is not set for ordinary visitors.",
   "Funding data is stored in a Supabase database that visitors can only read.",
   "Page views are counted with Vercel Web Analytics, which is cookieless and reports aggregate traffic only. If you accept the analytics banner, Google Analytics 4 also records anonymised visits and which features are used (for example, that a check was run, never what you type) and sets cookies. Nothing loads if you decline, and you can change your choice with Analytics settings in the footer. No advertising is used."

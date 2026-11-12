@@ -55,3 +55,64 @@ $$;
 
 revoke execute on function public.bump_note_usage(integer) from public, anon, authenticated;
 grant execute on function public.bump_note_usage(integer) to service_role;
+
+create table if not exists public.profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  audience text not null check (audience in ('job_seeker','sales','recruiter')),
+  roles text[] not null default '{}' check (cardinality(roles) <= 10),
+  skills text[] not null default '{}' check (cardinality(skills) <= 20),
+  cities text[] not null default '{}' check (cardinality(cities) <= 10),
+  sectors text[] not null default '{}' check (cardinality(sectors) <= 10),
+  stages text[] not null default '{}' check (cardinality(stages) <= 11),
+  updated_at timestamptz not null default now()
+);
+alter table public.profiles enable row level security;
+drop policy if exists "own profile select" on public.profiles;
+drop policy if exists "own profile insert" on public.profiles;
+drop policy if exists "own profile update" on public.profiles;
+drop policy if exists "own profile delete" on public.profiles;
+create policy "own profile select" on public.profiles for select to authenticated using ((select auth.uid()) = user_id);
+create policy "own profile insert" on public.profiles for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "own profile update" on public.profiles for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "own profile delete" on public.profiles for delete to authenticated using ((select auth.uid()) = user_id);
+
+create table if not exists public.shortlist (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  deal_id uuid not null references public.deals(id) on delete cascade,
+  status text not null default 'saved' check (status in ('saved','contacted','replied','meeting','closed','passed')),
+  notes text not null default '' check (char_length(notes) <= 1000),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, deal_id)
+);
+create index if not exists shortlist_user_idx on public.shortlist (user_id, updated_at desc);
+create index if not exists shortlist_deal_idx on public.shortlist (deal_id);
+alter table public.shortlist enable row level security;
+drop policy if exists "own shortlist select" on public.shortlist;
+drop policy if exists "own shortlist insert" on public.shortlist;
+drop policy if exists "own shortlist update" on public.shortlist;
+drop policy if exists "own shortlist delete" on public.shortlist;
+create policy "own shortlist select" on public.shortlist for select to authenticated using ((select auth.uid()) = user_id);
+create policy "own shortlist insert" on public.shortlist for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "own shortlist update" on public.shortlist for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "own shortlist delete" on public.shortlist for delete to authenticated using ((select auth.uid()) = user_id);
+
+create table if not exists public.alert_subscriptions (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  frequency text not null default 'weekly' check (frequency in ('daily','weekly')),
+  min_score integer not null default 40 check (min_score between 0 and 100),
+  active boolean not null default true,
+  last_sent_at timestamptz,
+  unsubscribe_token uuid not null default gen_random_uuid() unique,
+  created_at timestamptz not null default now()
+);
+alter table public.alert_subscriptions enable row level security;
+drop policy if exists "own alert select" on public.alert_subscriptions;
+drop policy if exists "own alert insert" on public.alert_subscriptions;
+drop policy if exists "own alert update" on public.alert_subscriptions;
+drop policy if exists "own alert delete" on public.alert_subscriptions;
+create policy "own alert select" on public.alert_subscriptions for select to authenticated using ((select auth.uid()) = user_id);
+create policy "own alert insert" on public.alert_subscriptions for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "own alert update" on public.alert_subscriptions for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "own alert delete" on public.alert_subscriptions for delete to authenticated using ((select auth.uid()) = user_id);
